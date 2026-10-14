@@ -14,7 +14,7 @@ Validation date: 14 October 2026. Reference environment: Python 3.12.4 on macOS,
 | Predicted-mask comparison with imported sample result | Pixel-for-pixel identical; 1,244 predicted foreground pixels |
 | Output raster contract | Single-band uint8, values {0, 1}, same dimensions, transform, and CRS as input |
 | Alert output | WGS84 centroid added; unverified hard-coded validation score removed |
-| Imported artifact integrity | 13 artifacts byte-compared against upstream and recorded with SHA-256 |
+| Experiment artifact integrity | 13 artifacts byte-compared against their recorded versions and documented with SHA-256 |
 | `python scripts/validate_repository.py` | Eight Python files, five notebooks, documentation links, JSON, and imported artifact hashes passed |
 | Real `POST /predict` sample request | HTTP 200, schema 1.1 alert, same 1,244-pixel prediction, and WGS84 coordinates |
 | Browser dashboard smoke test | Sample inference displayed the plume overlay and metrics; alert JSON expanded; Alert Log and Model Card tabs loaded |

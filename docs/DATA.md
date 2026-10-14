@@ -1,6 +1,6 @@
 # Data
 
-The upstream project names **GeoCH4PlumeNet**, available at [Zenodo record 16813369](https://zenodo.org/records/16813369), DOI `10.5281/zenodo.16813369`. The record describes 1,000 samples with simulated plumes, 13-band 512×512 Sentinel-2 L1C GeoTIFFs, masks, and an original 70/10/20 train/validation/test split. Labels derive from simulated plume transmissivity. They are not field measurements or analyst-drawn masks. The dataset contains modified Copernicus Sentinel data [2024].
+The project uses **GeoCH4PlumeNet**, available at [Zenodo record 16813369](https://zenodo.org/records/16813369), DOI `10.5281/zenodo.16813369`. The record describes 1,000 samples with simulated plumes, 13-band 512×512 Sentinel-2 L1C GeoTIFFs, masks, and an original 70/10/20 train/validation/test split. Labels derive from simulated plume transmissivity. They are not field measurements or analyst-drawn masks. The dataset contains modified Copernicus Sentinel data [2024].
 
 The downloaded training corpus is not included here. Retrieve the archives and metadata CSV from the record and retain the original split directories for future evaluation. Do not merge the official test set into training.
 

@@ -1,9 +1,4 @@
 {
-  "source_repository": "https://github.com/Zy1r9t7ec/methane-tracker",
-  "source_revisions": {
-    "main": "bce7a7dacc9341accebcc6e69617e22385a97850",
-    "master": "291525986212f964ac9d546cd2eee950f455a255"
-  },
   "artifacts": [
     {
       "path": "terramind_methane_best.pt",

@@ -54,8 +54,8 @@ The original sample alert and `src/alert_packet.py` remain schema 1.0 historical
 
 There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no negative-scene benchmark. Input support is restricted to the documented shape and band order. The service reloads its model for each request and retains outputs on disk. The dashboard can trigger duplicate work after an HTTP timeout.
 
-The upstream presentation discusses orbital and INT8 deployment. This repository contains no device-specific benchmark, quantised artifact, radiation-tolerance evidence, or flight-software qualification. Those are prospective research directions.
+The hackathon presentation discusses orbital and INT8 deployment. This repository contains no device-specific benchmark, quantised artifact, radiation-tolerance evidence, or flight-software qualification. Those are prospective research directions.
 
 ## Artifact traceability
 
-The checkpoint is imported unchanged from upstream `master`. [PROVENANCE.md](PROVENANCE.md) records its SHA-256. A new experiment should save its split manifest, seed, dependency versions, thresholds, model configuration, evaluation convention, and checkpoint hash together.
+The checkpoint is preserved unchanged from the hackathon experiment. [PROVENANCE.md](PROVENANCE.md) records its SHA-256. A new experiment should save its split manifest, seed, dependency versions, thresholds, model configuration, evaluation convention, and checkpoint hash together.

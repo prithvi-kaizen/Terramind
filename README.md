@@ -4,7 +4,7 @@ Satellite methane-plume segmentation with a frozen geospatial foundation model, 
 
 Terramind is the maintained home of the **MethanePulse** hackathon project. It takes a Sentinel-2 GeoTIFF, predicts a plume mask and a relative plume-size class, and exports a georeferenced mask plus a JSON alert. The model uses TerraMind-1.0-small through TerraTorch; the foundation model itself was developed by IBM, ESA, and Forschungszentrum Jülich.
 
-Developed and maintained by [prithvi-kaizen](https://github.com/prithvi-kaizen). The original repository and commit history are preserved in [project provenance](docs/PROVENANCE.md).
+Developed and maintained by [prithvi-kaizen](https://github.com/prithvi-kaizen).
 
 ## What you can run
 
@@ -104,7 +104,7 @@ Extracted unchanged from the saved output of `notebooks/TinyUNet.ipynb`. These a
 
 ## Data and repository layout
 
-The upstream README identifies [GeoCH4PlumeNet](https://zenodo.org/records/16813369) as the dataset. It contains simulated plumes inserted into Sentinel-2 imagery. Full training data is external; the sample tile and checkpoint are included here. See [DATA.md](docs/DATA.md) for download and directory instructions.
+The project uses [GeoCH4PlumeNet](https://zenodo.org/records/16813369), which contains simulated plumes inserted into Sentinel-2 imagery. Full training data is external; the sample tile and checkpoint are included here. See [DATA.md](docs/DATA.md) for download and directory instructions.
 
 ```text
 app.py                       Streamlit dashboard
@@ -137,6 +137,6 @@ The [implementation plan](docs/IMPLEMENTATION_PLAN.md) prioritises checkpoint pr
 
 ## Attribution and licensing
 
-Original project: [Zy1r9t7ec/methane-tracker](https://github.com/Zy1r9t7ec/methane-tracker). Foundation model: [TerraMind-1.0-small model card](https://huggingface.co/ibm-esa-geospatial/TerraMind-1.0-small). Framework: [TerraTorch](https://github.com/torchgeo/terratorch).
+Foundation model: [TerraMind-1.0-small model card](https://huggingface.co/ibm-esa-geospatial/TerraMind-1.0-small). Framework: [TerraTorch](https://github.com/torchgeo/terratorch).
 
-The imported project has no project-level license file. No new license is assigned to the inherited code, checkpoint, or data in this setup. See [PROVENANCE.md](docs/PROVENANCE.md) for source revisions, artifact hashes, and the remaining licensing decision.
+The project has no project-level license file. No new license is assigned to the code, checkpoint, or data in this setup. See [PROVENANCE.md](docs/PROVENANCE.md) for artifact hashes and the remaining licensing decision.

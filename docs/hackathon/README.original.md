@@ -1,4 +1,4 @@
-> Historical document copied from the hackathon repository's `master` branch. It contains claims and experiment values that conflict with the imported code and logs. See the current [README](../../README.md) and [model card](../MODEL_CARD.md) for the maintained description. Commands below use the original submission layout.
+> Historical hackathon document. It contains claims and experiment values that conflict with the code and logs. See the current [README](../../README.md) and [model card](../MODEL_CARD.md) for the maintained description. Commands below use the original submission layout.
 
 # MethanePulse: Automated Methane Plume Detection from Sentinel-2 SWIR
 

@@ -8,7 +8,7 @@ The current application, notebooks, sample tile, checkpoint, and saved outputs p
 
 ## Repository foundation
 
-This setup imports both upstream branches and retains their commit history. The application moves to the root, duplicate notebooks are consolidated by byte comparison, and documentation records the architecture, dataset, setup, and known limitations. Direct dependencies are pinned; runtime input checks, coordinate conversion, tests, and CI are added. Actual execution evidence is recorded in [VALIDATION.md](VALIDATION.md).
+The application lives at the repository root, duplicate notebooks are consolidated by byte comparison, and documentation records the architecture, dataset, setup, and known limitations. Direct dependencies are pinned; runtime input checks, coordinate conversion, tests, and CI are added. Actual execution evidence is recorded in [VALIDATION.md](VALIDATION.md).
 
 The original five notebooks, checkpoint, sample raster, experiment JSON, sample prediction, and presentation remain available. The historical README is archived rather than used as the current technical description.
 
