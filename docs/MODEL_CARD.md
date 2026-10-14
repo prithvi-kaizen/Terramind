@@ -52,7 +52,7 @@ The original sample alert and `src/alert_packet.py` remain schema 1.0 historical
 
 ## Known limitations
 
-There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no negative-scene benchmark. Input support is restricted to the documented shape and band order. The service reloads its model for each request and retains outputs on disk. The dashboard can trigger duplicate work after an HTTP timeout.
+There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no negative-scene benchmark. Input support is restricted to the documented shape and band order. The service reloads its model for each request and retains outputs on disk. The dashboard uses direct inference by default; its optional local API mode can trigger duplicate work after an HTTP timeout.
 
 The hackathon presentation discusses orbital and INT8 deployment. This repository contains no device-specific benchmark, quantised artifact, radiation-tolerance evidence, or flight-software qualification. Those are prospective research directions.
 

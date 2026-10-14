@@ -24,7 +24,7 @@ def main():
         if not (ROOT / name).is_file():
             failures.append(f"Missing required file: {name}")
     python_files = [ROOT / name for name in ["app.py", "infer.py", "endpoint.py"]]
-    for folder in ["src", "scripts", "tests"]:
+    for folder in ["src", "scripts", "tests", "deployment"]:
         python_files.extend((ROOT / folder).glob("*.py"))
     for path in python_files:
         try:

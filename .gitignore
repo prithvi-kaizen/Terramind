@@ -36,6 +36,7 @@ ENV/
 .env
 .env.*
 !.env.example
+.streamlit/secrets.toml
 
 # Package files
 dist/

@@ -1,6 +1,6 @@
 import requests
 import streamlit as st
-import sys, json, time, tempfile, subprocess, os
+import sys, json, time, tempfile, subprocess, os, uuid
 import numpy as np
 import rasterio
 from PIL import Image
@@ -10,12 +10,13 @@ import matplotlib.gridspec as gridspec
 import pandas as pd
 
 API_URL = f"http://127.0.0.1:{os.environ.get('METHANEPULSE_PORT', '5001')}/predict"
+INFERENCE_MODE = os.environ.get("METHANEPULSE_INFERENCE_MODE", "direct")
 
 sys.path.insert(0, str(Path(__file__).parent))
 from infer import run_inference
 
 # ── Auto-launch Flask endpoint if not already running ──────────
-if "_flask_proc" not in st.session_state:
+if INFERENCE_MODE == "api" and "_flask_proc" not in st.session_state:
     try:
         health = requests.get(API_URL.rsplit("/", 1)[0] + "/health", timeout=1)
         health.raise_for_status()
@@ -137,7 +138,7 @@ st.markdown("""
 BASE_DIR   = Path(__file__).parent
 SAMPLE_DIR = BASE_DIR / "sample_input"
 CKPT_PATH  = BASE_DIR / "terramind_methane_best.pt"
-RESULTS    = BASE_DIR / "outputs" / "predictions"
+RESULTS    = BASE_DIR / "outputs" / "predictions" / st.session_state.setdefault("_output_session", uuid.uuid4().hex)
 DOCS_DIR   = BASE_DIR / "docs"
 SEV_FG     = {"HIGH": "#e03131", "MEDIUM": "#ff8c00", "LOW": "#6daa45"}
 
@@ -221,22 +222,22 @@ with tab_demo:
         if run and tiff_path:
             progress = st.progress(0, text="Loading model...")
 
-            # Try Flask endpoint first; fall back to direct in-process inference
             packet = None
-            try:
-                progress.progress(15, text="Trying remote endpoint...")
-                with open(str(tiff_path), "rb") as f:
-                    response = requests.post(
-                        API_URL,
-                        files={"file": f},
-                        data={"threshold": threshold},
-                        timeout=10,
-                    )
-                if response.ok:
-                    packet = response.json()
-                    progress.progress(90, text="Received response from endpoint...")
-            except Exception:
-                packet = None  # Flask not running — fall through to local inference
+            if INFERENCE_MODE == "api":
+                try:
+                    progress.progress(15, text="Trying remote endpoint...")
+                    with open(str(tiff_path), "rb") as f:
+                        response = requests.post(
+                            API_URL,
+                            files={"file": f},
+                            data={"threshold": threshold},
+                            timeout=10,
+                        )
+                    if response.ok:
+                        packet = response.json()
+                        progress.progress(90, text="Received response from endpoint...")
+                except Exception:
+                    packet = None
 
             if packet is None:
                 # Direct in-process inference — no Flask server required

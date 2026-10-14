@@ -56,7 +56,7 @@ Acceptance: CLI and API produce matching masks from the same input/config; inval
 
 Estimated effort: 2–3 working days.
 
-1. Replace implicit Flask subprocess startup with an explicit service mode or direct model service. The dashboard's ten-second HTTP timeout can trigger duplicate inference.
+1. Retain the direct inference mode prepared for Community Cloud. Refactor the optional local Flask mode into an explicit managed service; its ten-second HTTP timeout can trigger duplicate inference.
 2. Update historical model-card copy from verified configuration and results. Remove orbital deployment language until a device benchmark exists.
 3. Add direct mask/JSON downloads, clear coordinate labels, and an explanation of area-based severity. Preserve empty, loading, error, and retry states.
 4. Check mobile layout, keyboard navigation, focus visibility, and colour contrast. Verify unsupported upload feedback through the actual interface.

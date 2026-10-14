@@ -24,7 +24,7 @@ The original Linux deployment file `packages.txt` lists `gdal-bin` and `libgdal-
 python -m streamlit run app.py
 ```
 
-Open http://localhost:8501. The inherited dashboard attempts to start a local Flask process and falls back to in-process inference. A cold request can exceed its ten-second HTTP timeout and trigger a second inference. Use the CLI to test the model independently when troubleshooting. Explicit service lifecycle management and model caching are planned improvements.
+Open http://localhost:8501. The dashboard runs inference in-process by default, which also supports Community Cloud without a second Flask service. For local API testing, set `METHANEPULSE_INFERENCE_MODE=api` before launching the dashboard; that optional mode attempts to start the Flask endpoint and falls back to direct inference after an unsuccessful request. The CLI can test the model independently. Model caching is a planned improvement.
 
 The dashboard's model-card tab contains inherited presentation values, including batch size and metric labels that do not match every notebook record. Use [MODEL_CARD.md](MODEL_CARD.md) as the technical reference.
 
@@ -36,7 +36,7 @@ python infer.py --input sample_input/0___0_S2B_20240326T165849_R1000_nonorm_band
 
 Use a 13-band, 512×512 GeoTIFF in the dataset's band order. The script selects zero-based indices 11 and 12 for B11 and B12. A standalone two-band GeoTIFF is not a valid input to the current loader, even though the model ultimately receives two channels.
 
-`--threshold` sets the segmentation probability cutoff; it is not a calibrated probability of a methane leak. Output coordinates follow the schema described in [MODEL_CARD.md](MODEL_CARD.md). Model outputs can vary across devices and library versions; UUIDs and timestamps also make alert JSON different on every invocation. Dashboard and API outputs go to `outputs/predictions/`, keeping the historical `results/` files intact. Runtime alerts include local artifact paths so the dashboard can display masks returned by the API.
+`--threshold` sets the segmentation probability cutoff; it is not a calibrated probability of a methane leak. Output coordinates follow the schema described in [MODEL_CARD.md](MODEL_CARD.md). Model outputs can vary across devices and library versions; UUIDs and timestamps also make alert JSON different on every invocation. Dashboard outputs use separate session directories under `outputs/predictions/`; API outputs use that parent directory. Historical `results/` files remain intact. Runtime alerts include local artifact paths so the dashboard can display masks returned by the API.
 
 ## Flask
 

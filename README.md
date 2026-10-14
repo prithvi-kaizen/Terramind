@@ -33,6 +33,8 @@ Open [localhost:8501](http://localhost:8501), keep **Sample tile** selected, and
 
 On Windows, activate with `.venv\Scripts\activate`. See [SETUP.md](docs/SETUP.md) for the API, notebook workflow, platform notes, and troubleshooting.
 
+For hosting, use the [Streamlit Community Cloud deployment guide](docs/DEPLOYMENT.md) and `deployment/streamlit_app.py`. Its Linux requirements select CPU-only PyTorch, and the dashboard runs inference in one process.
+
 ### Command-line inference
 
 ```bash

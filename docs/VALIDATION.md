@@ -25,7 +25,11 @@ The sample alert reports 0.4745% coverage and severity class HIGH with softmax c
 
 Tests check sample preprocessing, wrong band count and dimensions, missing CRS, non-finite pixels, invalid thresholds, empty and rotated-raster centroid handling, UTM conversion, the health endpoint, missing/unsupported/corrupt uploads, upload limits, threshold forwarding, and temporary-file cleanup after success and validation failure. API unit tests replace model inference with a stub; the real CLI run checks the included weights separately.
 
-The lightweight CI workflow performs structure and artifact checks plus the CPU unit tests. It does not install the complete TerraTorch stack or rerun training. Environment installation and real model inference were checked locally.
+The lightweight CI job performs structure and artifact checks plus the CPU unit tests. A separate `cloud-smoke` job installs the complete CPU deployment environment and runs the real sample through `deployment/streamlit_app.py`. Neither job reruns training.
+
+## Cloud preparation
+
+The cloud entrypoint passed a local Streamlit AppTest startup and real sample prediction with model downloads disabled. Its mask contained the expected 1,244 foreground pixels, included WGS84 coordinates, and used a separate output directory for the session. The deployment requirements select Linux CPU-only PyTorch and torchvision. See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment settings; configuration alone is not evidence of a live public URL.
 
 ## Remaining validation
 
