@@ -31,6 +31,8 @@ The lightweight CI job performs structure and artifact checks plus the CPU unit 
 
 The cloud entrypoint passed a local Streamlit AppTest startup and real sample prediction with model downloads disabled. Its mask contained the expected 1,244 foreground pixels, included WGS84 coordinates, and used a separate output directory for the session. The deployment requirements select Linux CPU-only PyTorch and torchvision. See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment settings; configuration alone is not evidence of a live public URL.
 
+Both jobs passed in [GitHub Actions run 38558347510](https://github.com/prithvi-kaizen/Terramind/actions/runs/38558347510). The hosted app at [terramind-demo.streamlit.app](https://terramind-demo.streamlit.app/) was then verified with a real sample prediction: 1,244 foreground pixels, a visible plume overlay, schema 1.1 JSON with WGS84 coordinates, and working Alert Log and Model Card tabs.
+
 ## Remaining validation
 
 Full dataset training, common-metric evaluation, independent test-set performance, severity calibration, GPU/MPS execution, and production hosting remain outside this setup. The original notebook logs are preserved as historical records. See [the implementation plan](IMPLEMENTATION_PLAN.md) for the corresponding acceptance checks.

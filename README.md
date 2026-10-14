@@ -2,6 +2,8 @@
 
 Satellite methane-plume segmentation with a frozen geospatial foundation model, a local inference API, and an interactive dashboard.
 
+**Live demo:** [terramind-demo.streamlit.app](https://terramind-demo.streamlit.app/)
+
 Terramind is the maintained home of the **MethanePulse** hackathon project. It takes a Sentinel-2 GeoTIFF, predicts a plume mask and a relative plume-size class, and exports a georeferenced mask plus a JSON alert. The model uses TerraMind-1.0-small through TerraTorch; the foundation model itself was developed by IBM, ESA, and Forschungszentrum Jülich.
 
 ## What you can run

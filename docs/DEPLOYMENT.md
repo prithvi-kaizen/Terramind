@@ -1,6 +1,8 @@
 # Streamlit Community Cloud deployment
 
-The repository includes a cloud entrypoint and CPU-only Linux dependency configuration. A public URL is available only after the app is actually deployed; none is assumed in this document.
+**Public demo:** [terramind-demo.streamlit.app](https://terramind-demo.streamlit.app/).
+
+The app is deployed using the cloud entrypoint and CPU-only Linux dependency configuration. Hosted sample inference, the plume overlay, alert JSON with WGS84 coordinates, the Alert Log, and the Model Card were verified on 14 October 2026.
 
 ## Deploy
 
@@ -24,7 +26,7 @@ The cloud entrypoint uses direct inference in the Streamlit process. It does not
 
 Dashboard prediction files and the alert log are separated by browser session. Uploads are limited to 32 MiB. Prediction files live on the app server and are not durable storage; expect them to disappear after a restart or redeployment.
 
-The shared host supplies CPU inference. The repository's `cloud-smoke` CI job installs the full CPU stack and runs the included sample through this exact entrypoint. Passing that job establishes Linux installation and sample inference, but public deployment still requires an authenticated Community Cloud account.
+The shared host supplies CPU inference. The repository's `cloud-smoke` CI job installs the full CPU stack and runs the included sample through this exact entrypoint. [The deployment preparation run](https://github.com/prithvi-kaizen/Terramind/actions/runs/38558347510) passed both the unit-test and full cloud-smoke jobs. Deploying or managing the app requires an authenticated Community Cloud account.
 
 ## Verify the deployed app
 
