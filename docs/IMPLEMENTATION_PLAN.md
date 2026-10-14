@@ -12,6 +12,8 @@ The application lives at the repository root, duplicate notebooks are consolidat
 
 The original five notebooks, checkpoint, sample raster, experiment JSON, sample prediction, and presentation remain available. The historical README is archived rather than used as the current technical description.
 
+The [public Streamlit demo](https://terramind-demo.streamlit.app/) is now deployed and verified with real sample inference. CI includes both the 27-test validation job and a full Linux CPU cloud-entrypoint smoke check. The README includes a hosted prediction screenshot and instructions for trying the demo.
+
 ## Milestone 1: establish a reproducible experiment baseline
 
 Estimated effort: 2–3 working days, assuming dataset access.
@@ -70,10 +72,10 @@ Acceptance: a reviewer can inspect the workflow in a few minutes; all displayed 
 Estimated effort: 2–3 working days.
 
 1. Add a container with a verified startup command and explicit CPU/GPU expectations. Benchmark cold start, warm inference, peak memory, and checkpoint size on named hardware.
-2. Extend CI with package installation, CPU model-shape tests, alert-schema tests, and one sample inference smoke test using verified weights. Keep model-quality evaluation separate from fast unit tests.
+2. Extend the existing Linux installation and real sample inference CI job with broader CPU model-shape and alert-schema coverage. Keep model-quality evaluation separate from fast unit tests.
 3. Decide code, checkpoint, and included-data licensing with the relevant owners and source terms. Add a project license once that decision is established.
 4. Package the checkpoint with a manifest and checksum, preferably as a release asset or documented model download instead of growing ordinary Git history.
-5. Prepare a versioned release, changelog, reproducibility report, screenshots, and demo link if hosting is ready. Document service resource limits and failure recovery before public hosting.
+5. Prepare a versioned release, changelog, and reproducibility report alongside the available public demo and screenshot. Document service resource limits and failure recovery for continued hosting.
 
 Acceptance: installation works from a clean clone; CI passes; the release has verified artifacts, traceable metrics, a tested demo path, and clear terms. Public hosting is optional for the first reproducible release.
 

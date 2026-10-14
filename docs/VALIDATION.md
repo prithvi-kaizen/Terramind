@@ -35,7 +35,7 @@ Both jobs passed in [GitHub Actions run 38558347510](https://github.com/prithvi-
 
 ## Remaining validation
 
-Full dataset training, common-metric evaluation, independent test-set performance, severity calibration, GPU/MPS execution, and production hosting remain outside this setup. The original notebook logs are preserved as historical records. See [the implementation plan](IMPLEMENTATION_PLAN.md) for the corresponding acceptance checks.
+Full dataset training, common-metric evaluation, independent test-set performance, severity calibration, GPU/MPS execution, and production service hardening remain outside this setup. The research notebook logs are preserved as historical records. See [the implementation plan](IMPLEMENTATION_PLAN.md) for the corresponding acceptance checks.
 
 ## Documentation review
 

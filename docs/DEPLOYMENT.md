@@ -4,7 +4,7 @@
 
 The app is deployed using the cloud entrypoint and CPU-only Linux dependency configuration. Hosted sample inference, the plume overlay, alert JSON with WGS84 coordinates, the Alert Log, and the Model Card were verified on 14 October 2026.
 
-## Deploy
+## Deployment settings
 
 Sign in to [Streamlit Community Cloud](https://share.streamlit.io/) and create an app with:
 
@@ -14,9 +14,10 @@ Sign in to [Streamlit Community Cloud](https://share.streamlit.io/) and create a
 | Branch | `main` |
 | Main file path | `deployment/streamlit_app.py` |
 | Python version | `3.12` |
+| App subdomain | `terramind-demo` |
 | Secrets | None required |
 
-Choose an available app subdomain in the deployment form. The [official deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy) describes the sign-in, repository selection, and Python settings.
+These settings describe the live deployment. To reproduce it as a separate app, choose another available subdomain. The [official deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy) describes the sign-in, repository selection, and Python settings.
 
 The dependency file beside the entrypoint selects CPU-only PyTorch and torchvision on Linux and includes the pinned root dependencies. Community Cloud checks the entrypoint directory for dependency files before the repository root; see [its dependency guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies).
 
@@ -32,4 +33,4 @@ The shared host supplies CPU inference. The repository's `cloud-smoke` CI job in
 
 After the deployment build finishes, select **Sample tile** and click **Run Inference**. Confirm that the plume overlay appears, the alert contains WGS84 coordinates, and the Alert Log and Model Card tabs load. The recorded sample prediction has 1,244 foreground pixels at threshold 0.5; this check is not a new quality benchmark.
 
-Only add the URL to the repository homepage and README after verifying the hosted app. Check the build logs for dependency failures or memory errors rather than assuming a successful deployment from the configuration alone.
+The verified URL is listed in the README and repository homepage. After deployment changes, repeat the sample check and inspect the build logs for dependency failures or memory errors.

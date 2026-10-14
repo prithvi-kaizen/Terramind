@@ -4,7 +4,19 @@ Satellite methane-plume segmentation with a frozen geospatial foundation model, 
 
 **Live demo:** [terramind-demo.streamlit.app](https://terramind-demo.streamlit.app/)
 
-Terramind is the maintained home of the **MethanePulse** hackathon project. It takes a Sentinel-2 GeoTIFF, predicts a plume mask and a relative plume-size class, and exports a georeferenced mask plus a JSON alert. The model uses TerraMind-1.0-small through TerraTorch; the foundation model itself was developed by IBM, ESA, and Forschungszentrum Jülich.
+Terramind was developed as **MethanePulse** during a hackathon. It takes a Sentinel-2 GeoTIFF, predicts a plume mask and a relative plume-size class, and exports a georeferenced mask plus a JSON alert. The model uses TerraMind-1.0-small through TerraTorch; the foundation model itself was developed by IBM, ESA, and Forschungszentrum Jülich.
+
+## Try the live demo
+
+1. Open [terramind-demo.streamlit.app](https://terramind-demo.streamlit.app/).
+2. Keep **Sample tile** selected and click **Run Inference**.
+3. Inspect the red plume overlay, coverage statistics, and alert JSON. **Alert Log** shows your session's predictions; **Model Card** shows the experiment configuration.
+
+The hosted demo runs real CPU inference with the included checkpoint. No local installation, training dataset, or API key is required. The first prediction can take longer while the model libraries initialise. To use your own input, choose **Upload tile** and supply a 13-band, 512×512 GeoTIFF in the documented band order, up to 32 MiB. See [DATA.md](docs/DATA.md) for the input conventions.
+
+![Hosted sample inference showing the input tile, predicted plume overlay, and coverage statistics](docs/images/streamlit-demo.jpg)
+
+Screenshot of a verified sample prediction on the hosted app. The displayed severity is a mask-area proxy, not an emission-rate measurement.
 
 ## What you can run
 
@@ -12,11 +24,11 @@ Terramind is the maintained home of the **MethanePulse** hackathon project. It t
 - A command-line inference script that writes a binary GeoTIFF mask and JSON alert.
 - A Flask `POST /predict` endpoint for local multipart uploads.
 - Five research notebooks covering data exploration, a spectral baseline, TinyUNet, and the TerraMind model.
-- The original trained checkpoint, sample input, saved sample outputs, and experiment logs.
+- The trained checkpoint, sample input, saved sample outputs, and experiment logs.
 
 This is a research prototype. Severity is derived from mask area, not a measured methane emission rate. Satellite acquisition gaps, false positives, and performance on real plumes remain open problems. Read the [model card](docs/MODEL_CARD.md) before interpreting predictions. The inherited dashboard still contains historical model-card values; the model card in this repository records the evidence and discrepancies explicitly.
 
-## Quick start
+## Run locally
 
 Use **Python 3.12**. The included checkpoint is approximately 85 MiB, so the initial clone is larger than a typical Python project.
 
@@ -84,7 +96,7 @@ The encoder produces patch embeddings. The segmentation branch has four transpos
 
 ## Recorded experiments
 
-These are **imported experiment records**, not independently reproduced benchmarks. The notebooks record a custom location-based split with 619 training tiles and 185 validation tiles. The published dataset's original split is different.
+These are **saved experiment records**, not independently reproduced benchmarks. The notebooks record a custom location-based split with 619 training tiles and 185 validation tiles. The published dataset's original split is different.
 
 | Experiment | Recorded IoU | Recorded F1 | Evidence and interpretation |
 | --- | ---: | ---: | --- |
@@ -115,8 +127,9 @@ endpoint.py                  Local Flask endpoint
 src/alert_packet.py          Original notebook alert helper
 notebooks/                   Research notebooks
 sample_input/                Included Sentinel-2 sample
-results/                     Imported sample mask and alert
-terramind_methane_best.pt     Imported trained checkpoint
+results/                     Saved sample mask and alert
+terramind_methane_best.pt     Trained checkpoint
+deployment/                  Cloud entrypoint and CPU-only requirements
 docs/                        Setup, model card, data guide, plan, logs
 scripts/                     Environment and repository checks
 tests/                       Runtime validation tests
@@ -131,11 +144,11 @@ python scripts/validate_repository.py
 python -m pytest
 ```
 
-The CI workflow checks notebook structure, repository assets, Python syntax, and the runtime validation tests without downloading model weights. It does not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 27 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
 
 ## Next steps
 
-The [implementation plan](docs/IMPLEMENTATION_PLAN.md) prioritises checkpoint provenance, consistent evaluation, reproducible training, robust inference, and a documented demo. Temporal imagery, calibrated emission estimates, and embedded deployment are later research work.
+The public demo and Linux inference smoke check are available. The [implementation plan](docs/IMPLEMENTATION_PLAN.md) prioritises checkpoint provenance, consistent evaluation, reproducible training, and robust inference. Temporal imagery, calibrated emission estimates, and embedded deployment are later research work.
 
 ## Attribution and licensing
 

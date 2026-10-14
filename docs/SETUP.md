@@ -2,6 +2,8 @@
 
 Run commands from the repository root. Python 3.12 is the reference interpreter for this setup. Python 3.14 is not the recommended environment for the inherited ML stack.
 
+For the hosted sample workflow without local installation, open [the live demo](https://terramind-demo.streamlit.app/). See [DEPLOYMENT.md](DEPLOYMENT.md) for its cloud configuration.
+
 ## Install
 
 ```bash
