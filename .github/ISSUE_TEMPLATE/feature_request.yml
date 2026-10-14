@@ -1,0 +1,17 @@
+name: Feature request
+description: Propose a project improvement
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Describe who needs this and the problem it addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Proposed change and acceptance check
+      description: Explain how we could verify the result.
+    validations:
+      required: true

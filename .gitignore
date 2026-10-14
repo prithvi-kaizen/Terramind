@@ -16,6 +16,7 @@ __pycache__/
 *.so
 .Python
 venv/
+.venv/
 env/
 ENV/
 
@@ -33,12 +34,16 @@ ENV/
 
 # Local environment files
 .env
-.env.local
+.env.*
+!.env.example
 
 # Package files
 dist/
 build/
 *.egg-info/
 
-# Note: submissions/ folder is intentionally NOT ignored
-# All submission files should be tracked in git
+# Runtime output is local; the original sample artifacts remain tracked.
+.pytest_cache/
+.coverage
+htmlcov/
+*.log

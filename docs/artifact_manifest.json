@@ -1,0 +1,87 @@
+{
+  "source_repository": "https://github.com/Zy1r9t7ec/methane-tracker",
+  "source_revisions": {
+    "main": "bce7a7dacc9341accebcc6e69617e22385a97850",
+    "master": "291525986212f964ac9d546cd2eee950f455a255"
+  },
+  "artifacts": [
+    {
+      "path": "terramind_methane_best.pt",
+      "source_path": "submissions/MethanePulse/terramind_methane_best.pt",
+      "size_bytes": 88804452,
+      "sha256": "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0"
+    },
+    {
+      "path": "sample_input/0___0_S2B_20240326T165849_R1000_nonorm_bands20m.tiff",
+      "source_path": "submissions/MethanePulse/sample_input/0___0_S2B_20240326T165849_R1000_nonorm_bands20m.tiff",
+      "size_bytes": 6370404,
+      "sha256": "1250674b0e112721b254fdfe52408bddabfacce630bad473f4dd5c7bf6838603"
+    },
+    {
+      "path": "results/0___0_S2B_20240326T165849_R1000_nonorm_bands20m_mask.tiff",
+      "source_path": "submissions/MethanePulse/results/0___0_S2B_20240326T165849_R1000_nonorm_bands20m_mask.tiff",
+      "size_bytes": 12720,
+      "sha256": "d092aa5ec808ff45faf7b289eb3767dd3af6e854f3810d6ca525b4ec2999514a"
+    },
+    {
+      "path": "results/0___0_S2B_20240326T165849_R1000_nonorm_bands20m_alert.json",
+      "source_path": "submissions/MethanePulse/results/0___0_S2B_20240326T165849_R1000_nonorm_bands20m_alert.json",
+      "size_bytes": 1091,
+      "sha256": "87d228170a26134a9bc38fc14d4fede134b77422fa5f18f5a8efa2ec947b9243"
+    },
+    {
+      "path": "docs/hackathon/Slide.pdf",
+      "source_path": "submissions/Slide.pdf",
+      "size_bytes": 3227995,
+      "sha256": "0a0d024523622d6650539166490d14a561472c172988fef8d96c885543d6e9fa"
+    },
+    {
+      "path": "notebooks/TinyUNet.ipynb",
+      "source_path": "submissions/MethanePulse/notebooks/TinyUNet.ipynb",
+      "size_bytes": 1863418,
+      "sha256": "fe8c0952aecd3994cb4d53452688c95c5a47a66be1d657fd214d2b99683ab609"
+    },
+    {
+      "path": "notebooks/setup.ipynb",
+      "source_path": "submissions/MethanePulse/notebooks/setup.ipynb",
+      "size_bytes": 3375,
+      "sha256": "388aca9ba2bbb8ffc59a42da164e22bf26457f8eb2f5f7f674a529c5b28b042f"
+    },
+    {
+      "path": "notebooks/baseline.ipynb",
+      "source_path": "submissions/MethanePulse/notebooks/baseline.ipynb",
+      "size_bytes": 3568111,
+      "sha256": "eba430bc429dfcb23f8b65f2112297fca664beb0ba33e9cb8c6be414a9ee220e"
+    },
+    {
+      "path": "notebooks/TerraMind.ipynb",
+      "source_path": "submissions/MethanePulse/notebooks/TerraMind.ipynb",
+      "size_bytes": 39170,
+      "sha256": "7c06e7cda16cda655e19a3e7d8e2b34afe279c511053c36fad50c5c7f25b5459"
+    },
+    {
+      "path": "notebooks/data.ipynb",
+      "source_path": "submissions/MethanePulse/notebooks/data.ipynb",
+      "size_bytes": 3633971,
+      "sha256": "f332d0fc2b4a21ee755fb6bf6a003eab751c1526e02247c678418375f9411691"
+    },
+    {
+      "path": "docs/terramind_training_history.json",
+      "source_path": "submissions/MethanePulse/docs/terramind_training_history.json",
+      "size_bytes": 3013,
+      "sha256": "92ef51e3e70f072fead97a8b725e11e42f6a229d4d955d490344972c40f61f15"
+    },
+    {
+      "path": "docs/physics_baseline_metrics.json",
+      "source_path": "submissions/MethanePulse/docs/physics_baseline_metrics.json",
+      "size_bytes": 870,
+      "sha256": "ad57bfbd61377d090a43b494ef8273a658bbd8958eec14ad984d7b2cd5f1ec43"
+    },
+    {
+      "path": "docs/tinyunet_eval_metrics.json",
+      "source_path": "submissions/MethanePulse/docs/tinyunet_eval_metrics.json",
+      "size_bytes": 263,
+      "sha256": "64b03ffb6d4e225abdaef329b0be759f0f883d27bf0310c8d56b73a2e545156c"
+    }
+  ]
+}

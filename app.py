@@ -1,6 +1,6 @@
 import requests
 import streamlit as st
-import sys, json, time, tempfile, subprocess
+import sys, json, time, tempfile, subprocess, os
 import numpy as np
 import rasterio
 from PIL import Image
@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import pandas as pd
 
-API_URL = "http://127.0.0.1:5000/predict"
+API_URL = f"http://127.0.0.1:{os.environ.get('METHANEPULSE_PORT', '5001')}/predict"
 
 sys.path.insert(0, str(Path(__file__).parent))
 from infer import run_inference
@@ -17,7 +17,10 @@ from infer import run_inference
 # ── Auto-launch Flask endpoint if not already running ──────────
 if "_flask_proc" not in st.session_state:
     try:
-        requests.get("http://127.0.0.1:5000/", timeout=1)
+        health = requests.get(API_URL.rsplit("/", 1)[0] + "/health", timeout=1)
+        health.raise_for_status()
+        if health.json().get("status") != "ok":
+            raise RuntimeError("The configured port is not serving the inference API")
         st.session_state["_flask_proc"] = None  # already running externally
     except Exception:
         try:
@@ -134,7 +137,7 @@ st.markdown("""
 BASE_DIR   = Path(__file__).parent
 SAMPLE_DIR = BASE_DIR / "sample_input"
 CKPT_PATH  = BASE_DIR / "terramind_methane_best.pt"
-RESULTS    = BASE_DIR / "results"
+RESULTS    = BASE_DIR / "outputs" / "predictions"
 DOCS_DIR   = BASE_DIR / "docs"
 SEV_FG     = {"HIGH": "#e03131", "MEDIUM": "#ff8c00", "LOW": "#6daa45"}
 
@@ -276,7 +279,7 @@ with tab_demo:
             img_col, stat_col = st.columns([1.3, 1])
             with img_col:
                 stem      = Path(st.session_state["tile_path"]).stem
-                mask_path = RESULTS / f"{stem}_mask.tiff"
+                mask_path = Path(pkt.get("artifacts", {}).get("mask_path", str(RESULTS / f"{stem}_mask.tiff")))
                 rgb_np    = tiff_to_rgb(st.session_state["tile_path"])
                 if mask_path.exists() and det["plume_detected"]:
                     st.image(overlay_mask(rgb_np, mask_path), caption="Plume overlay (red = detected)", width="stretch")

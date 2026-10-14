@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a setup, inference, or dashboard problem
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include expected behaviour and the command or action used.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, package versions, and CPU / MPS / CUDA device.
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error and reproduction steps
+      description: Remove credentials and private data before sharing logs.
