@@ -148,7 +148,7 @@ The CI workflow has two jobs: `validate` checks notebook structure, artifact has
 
 ## Next steps
 
-The public demo and Linux inference smoke check are available. The [implementation plan](docs/IMPLEMENTATION_PLAN.md) prioritises checkpoint provenance, consistent evaluation, reproducible training, and robust inference. Temporal imagery, calibrated emission estimates, and embedded deployment are later research work.
+The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) covers shared and benchmarked inference, inexpensive plume-candidate checks, and targeted training with optional temporal corroboration. It defines compute limits and acceptance checks for each phase; these improvements are planned, not current capabilities. Physical emission estimates and embedded deployment remain later research work.
 
 ## Attribution and licensing
 
