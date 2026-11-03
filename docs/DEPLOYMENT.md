@@ -34,3 +34,7 @@ The shared host supplies CPU inference. The repository's `cloud-smoke` CI job in
 After the deployment build finishes, select **Sample tile** and click **Run Inference**. Confirm that the plume overlay appears, the alert contains WGS84 coordinates, and the Alert Log and Model Card tabs load. The recorded sample prediction has 1,244 foreground pixels at threshold 0.5; this check is not a new quality benchmark.
 
 The verified URL is listed in the README and repository homepage. After deployment changes, repeat the sample check and inspect the build logs for dependency failures or memory errors.
+
+## Phase 1 update
+
+Phase 1 was merged into `main` and the hosted sample was verified on 3 November 2026. Its alert includes the checkpoint SHA-256, architecture/preprocessing versions, WGS84 coordinates, and unique request artifact paths. The model weights remain unchanged. The subsequent evaluation update corrects the model-card copy and presents the real-scene limitations; see [EVALUATION.md](EVALUATION.md).

@@ -77,4 +77,4 @@ HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 python scripts/smoke_inference.py
 python -m pip check
 ```
 
-The real-model smoke check verifies the complete historical sample mask, CRS and affine transform, API/cloud prediction equivalence, and one model load for three requests in one worker. CI installs the full Linux CPU deployment environment before this check. See [the Phase 1 report](phase-1-report.md) and [data inventory](phase-1-data-inventory.json).
+The real-model smoke check verifies the complete historical sample mask, CRS and affine transform, and exact API/cloud prediction equivalence within a worker. Cross-CPU reference comparison allows at most eight probability-boundary pixels within 0.0001 of threshold 0.5; diagnostics report any allowance. It uses one model load and three requests, plus one diagnostic prediction only if the reference differs. CI installs the full Linux CPU deployment environment before this check. See [the Phase 1 report](phase-1-report.md) and [data inventory](phase-1-data-inventory.json).

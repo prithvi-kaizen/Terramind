@@ -51,3 +51,30 @@ The high any-foreground recall accompanies an unacceptable false-positive rate a
 The initial Actions real-data artifact from run 41582495788 is invalid: its catalog join used archive-local parent IDs without the source filename. The corrected code joins on both fields and requires exactly one target/reference/mask. A regression test covers collisions across country archives. The fixed cohort IDs and selection method were retained; thresholds and model weights were not tuned using these outcomes. The corrected report supersedes the initial artifact.
 
 The corrected real run used the exact evaluator source whose SHA-256 is recorded in `real-results.json`. A later download-only optimization adds four bounded HTTP range workers for synthetic archives; it does not change predictions or the real-scene method.
+
+## Complete synthetic audit results
+
+All three publisher archives passed their MD5 checksums. The [complete report](evaluation/geoch4-complete.json) accounts for all 1,000 inputs. The [training](evaluation/geoch4-train.json), [validation](evaluation/geoch4-val.json), and [test](evaluation/geoch4-test.json) reports preserve per-input counts, hashes, and failures.
+
+| Published split | Scored / available | Global pixel IoU | Global pixel F1 |
+| --- | ---: | ---: | ---: |
+| Train | 700 / 700 | 0.47967 | 0.64835 |
+| Validation | 104 / 104 | 0.47024 | 0.63968 |
+| Test | 195 / 196 | 0.42906 | 0.60048 |
+| Combined corpus, including training data | 999 / 1,000 | 0.46762 | 0.63725 |
+
+The unmatched test input is `120___7_S2A_20240310T072721_R1000_nonorm_bands20m.tiff`; the archive adapter could not find a corresponding label with the same identifier. It remains an explicit exclusion rather than an invented label. All scored synthetic scenes contain foreground labels, so this corpus cannot measure scene-level false positives on plume-free inputs.
+
+The publisher's train/test splits share eight location identifiers, and validation/test share one; filename-derived plume IDs are also shared. The current checkpoint's exact training membership remains unknown. Treat the published test score as a descriptive audit of this preserved artifact, not a claim of independent test generalisation. The entire corpus includes training data and must not be presented as held-out accuracy.
+
+Filtering the combined published train and validation archives by the historical notebook rule reconstructs 619 training tiles and 185 validation tiles (location IDs 8 and 9). Their global pixel scores are IoU 0.51533 / F1 0.68016 and IoU 0.34740 / F1 0.51566 respectively. These use a new global-count evaluator; the historical notebook averaged batch IoU. The complete report's `historical_location_holdout` field covers 208 tiles across all three archives and includes additional test images, so it is a different cohort.
+
+Synthetic execution completed in [Actions run 41582495788](https://github.com/prithvi-kaizen/Terramind/actions/runs/41582495788), revision `4bdfa94`, on Linux CPU with two threads. Its synthetic reports are valid; its initial real-data artifact is superseded as described above. No new checkpoint was trained or selected.
+
+## Deployment and software checks
+
+Phase 1 and the corrected evaluation view are deployed at [terramind-demo.streamlit.app](https://terramind-demo.streamlit.app/). Hosted sample inference retained 1,244 foreground pixels, and the alert exposed the expected checkpoint hash and unique request paths. The model-card view now separates historical experiments from measured external evidence and explains the real-scene limitations.
+
+Local validation passed 51 tests. Cross-adapter predictions remain exact within a worker. The saved sample matches exactly on the local reference CPU. A later Linux CI runner produced a different thresholded mask with the same foreground count; the smoke check now diagnoses differences and permits at most eight pixels only when each predicted probability is within 0.0001 of threshold 0.5. Every other pixel, output dimensions, CRS, affine transform, and same-worker adapter result must still match. Larger or confident differences fail the check. This allowance does not modify runtime predictions or evaluation metrics; the latest Linux diagnostic is recorded after CI completes.
+
+Both jobs passed in [final code CI run 41584954483](https://github.com/prithvi-kaizen/Terramind/actions/runs/41584954483), revision `698c435`. Its diagnostic reported an exact reference match (zero different pixels), one model load, and three inference passes. No probability-boundary allowance was needed on that runner. The earlier failed runner did not save probability diagnostics, so its discrepancy cannot be conclusively attributed from the retained logs.

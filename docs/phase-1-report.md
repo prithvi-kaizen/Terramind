@@ -1,6 +1,6 @@
 # Phase 1 implementation report
 
-Updated 3 November 2026. Software implementation is complete on `codex/phase-1-inference-baseline`; full-dataset and independent real-plume evaluation remain unavailable. This report does not establish improved detection quality. Phase 1 was subsequently merged and deployed on 3 November 2026; hosted sample inference and model identity were verified. See [the external evaluation report](EVALUATION.md) for follow-up evidence.
+Updated 3 November 2026. Software implementation is complete on `codex/phase-1-inference-baseline`; the full synthetic audit and a limited real-scene stress test have now completed. Deployment-matched independent validation remains open. This report does not establish improved detection quality. Phase 1 was subsequently merged and deployed on 3 November 2026; hosted sample inference and model identity were verified. See [the external evaluation report](EVALUATION.md) for follow-up evidence.
 
 ## Changes
 
@@ -37,9 +37,9 @@ The saved run measured 12.338 seconds from fresh Python process start to first o
 | Complete sample mask and georeferencing parity | Passed real CPU regression |
 | CPU cold/warm timing and peak memory | Measured; see benchmark JSON |
 | Evaluator, split manifests, label validation, calculation tests | Implemented; fixture-tested |
-| Full-dataset checkpoint evaluation | Pending external imagery and ground-truth masks |
-| Verified negative-scene false-positive rates | Pending reviewed negative scenes |
-| Independent real-plume performance | Pending independent observations/labels |
+| Full-dataset checkpoint evaluation | Completed 999 scored / 1,000 audited; see follow-up report |
+| Verified negative-scene false-positive rates | Measured on 63 provider-curated references; project-side independent review remains open |
+| Independent real-plume performance | Limited resized MethaneSET stress test completed; operational validation remains open |
 | Historical checkpoint/training-log association | Unknown; no new evidence resolves the disagreement |
 | Corrected training configuration | Working copy generated and tested; training not run |
 | Linux CPU deployment installation and smoke | Passed both jobs in the linked GitHub Actions run |
@@ -52,3 +52,5 @@ Phase 2 software work can proceed from these interfaces. Detection-quality claim
 Both `validate` and `cloud-smoke` passed in [GitHub Actions run 41579345593](https://github.com/prithvi-kaizen/Terramind/actions/runs/41579345593) for implementation revision `8f09fec`. This includes a clean Linux CPU dependency installation, dependency consistency, repository checks, unit tests, and the real CPU adapter/cache smoke check. Subsequent report-only edits do not change the tested implementation.
 
 The implementation is available in [draft pull request 1](https://github.com/prithvi-kaizen/Terramind/pull/1). Additional local checks verified actual CLI output against the complete reference mask and used a simulated API timeout in Streamlit AppTest to confirm that the dashboard displays an error without calling local inference.
+
+The [external evaluation follow-up](EVALUATION.md) supersedes the original missing-data status: complete synthetic and limited real-scene evidence is now available, and hosted deployment was verified.

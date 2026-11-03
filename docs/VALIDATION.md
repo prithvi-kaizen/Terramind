@@ -48,3 +48,9 @@ The application design is inherited. This setup does not claim a visual, accessi
 ## Phase 1 verification
 
 Phase 1 adds shared cached inference and reproducible benchmark/evaluation commands. All 42 local tests and both Linux CPU CI jobs passed. See [the Phase 1 report](phase-1-report.md) for exact-mask regression, adapter/cache checks, the measured CPU baseline, and remaining dataset-dependent evaluation.
+
+## External evaluation and deployment follow-up
+
+The fixed real-scene cohort and measured limitations are documented in [EVALUATION.md](EVALUATION.md). It is an out-of-domain transfer test with a declared adapter, not evidence of operational methane detection. The initial real-data artifact is superseded because of a corrected archive-local catalog join bug. Hosted Phase 1 sample inference was verified on 3 November 2026, including model identity and isolated output paths.
+
+The final code passed 51 tests and both Linux CI jobs in [run 41584954483](https://github.com/prithvi-kaizen/Terramind/actions/runs/41584954483). The reference diagnostic was exact (zero changed pixels); bounded near-threshold diagnostics are available for future cross-CPU differences. All 1,000 synthetic inputs were audited, with 999 scored; the corrected real cohort scored 126 of 128 inputs. Raw reports and exclusion details are preserved in `docs/evaluation/`.

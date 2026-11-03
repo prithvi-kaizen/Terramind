@@ -94,6 +94,19 @@ flowchart LR
 
 The encoder produces patch embeddings. The segmentation branch has four transposed convolutions followed by a 1×1 convolution and interpolation. The severity branch uses mean-pooled patch embeddings, not a CLS token. Saved notebook output records 616,388 trainable head parameters; encoder weights remain frozen.
 
+## Current checkpoint evaluation
+
+The existing checkpoint was evaluated at threshold 0.5 without retraining or threshold tuning.
+
+| Evaluation | Scored / available | Pixel IoU | Pixel F1 |
+| --- | ---: | ---: | ---: |
+| Published synthetic train split | 700 / 700 | 0.4797 | 0.6483 |
+| Published synthetic validation split | 104 / 104 | 0.4702 | 0.6397 |
+| Published synthetic test split | 195 / 196 | 0.4291 | 0.6005 |
+| Real-scene stress test, including clean references | 126 / 128 | 0.0174 | 0.0343 |
+
+All 1,000 synthetic inputs were audited; one test image lacked a matching label. The real cohort rejected one pair with invalid pixels. Published synthetic splits share locations and plume identifiers, and the checkpoint's training-run mapping is unknown. These scores do not establish independent geographic generalisation. On real clean references, 62 of 63 scenes triggered false positives. Read the [protocol, exclusions, raw results, and interpretation](docs/EVALUATION.md).
+
 ## Recorded experiments
 
 These are **saved experiment records**, not independently reproduced benchmarks. The notebooks record a custom location-based split with 619 training tiles and 185 validation tiles. The published dataset's original split is different.
@@ -144,7 +157,7 @@ python scripts/validate_repository.py
 python -m pytest
 ```
 
-The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 47 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 51 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
 
 The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evaluation manifests, and output retention. Phase 1 software is deployed; external evaluation evidence is documented in the [public-data report](docs/EVALUATION.md).
 

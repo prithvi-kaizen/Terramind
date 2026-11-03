@@ -50,6 +50,10 @@ The maintained CLI uses schema version 1.1:
 
 The original sample alert and `src/alert_packet.py` remain schema 1.0 historical artifacts. They do not contain the maintained coordinate correction.
 
+## Full synthetic checkpoint audit
+
+All 1,000 published GeoCH4PlumeNet inputs were attempted at threshold 0.5. The published test split scored 195 of 196 images, with global pixel IoU 0.42906 and F1 0.60048; one matching label was unavailable to the archive adapter. Published splits share locations and plume identifiers, and checkpoint training membership is unresolved. The score is a descriptive artifact audit, not evidence of independent generalisation. The combined 999-image score includes training images. See [EVALUATION.md](EVALUATION.md) for all splits and raw counts.
+
 ## External real-scene stress test
 
 The existing checkpoint at threshold 0.5 was evaluated on a deterministic MethaneSET test subset: 64 targets and 64 provider-curated clean references. One pair had invalid pixels and was rejected, leaving 63 positives and 63 negatives. An explicitly declared offline resize adapter returned probability maps to the native label grid. Pixel IoU was 0.01742 and F1 was 0.03425; 62 of 63 clean references triggered predictions. Only 33 of 63 positive scenes had any overlap with their annotated plume.
