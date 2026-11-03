@@ -38,3 +38,5 @@ The verified URL is listed in the README and repository homepage. After deployme
 ## Phase 1 update
 
 Phase 1 was merged into `main` and the hosted sample was verified on 3 November 2026. Its alert includes the checkpoint SHA-256, architecture/preprocessing versions, WGS84 coordinates, and unique request artifact paths. The model weights remain unchanged. The subsequent evaluation update corrects the model-card copy and presents the real-scene limitations; see [EVALUATION.md](EVALUATION.md).
+
+The final hosted view was checked after publication of the full synthetic report. Both the synthetic split table and corrected real-scene results were visible in Model Card; repeated sample requests retained 1,244 foreground pixels and the corrected coordinate labels. Screenshots are preserved in `docs/images/evaluation-live.png` and `docs/images/streamlit-demo.png`.

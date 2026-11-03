@@ -14,7 +14,7 @@ Terramind was developed as **MethanePulse** during a hackathon. It takes a Senti
 
 The hosted demo runs real CPU inference with the included checkpoint. No local installation, training dataset, or API key is required. The first prediction can take longer while the model libraries initialise. To use your own input, choose **Upload tile** and supply a 13-band, 512×512 GeoTIFF in the documented band order, up to 32 MiB. See [DATA.md](docs/DATA.md) for the input conventions.
 
-![Hosted sample inference showing the input tile, predicted plume overlay, and coverage statistics](docs/images/streamlit-demo.jpg)
+![Hosted sample inference showing the input tile, predicted plume overlay, and coverage statistics](docs/images/streamlit-demo.png)
 
 Screenshot of a verified sample prediction on the hosted app. The displayed severity is a mask-area proxy, not an emission-rate measurement.
 
