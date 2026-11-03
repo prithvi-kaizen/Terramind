@@ -19,7 +19,7 @@ The saved notebook output reports 21,481,728 frozen encoder parameters and 616,3
 
 The notebook uses a location-based 619/185 split, batch size 2, ten epochs of severity warmup, then twenty joint epochs. Joint loss is 0.7 times segmentation loss plus 0.3 times class-weighted severity cross-entropy. Segmentation loss is an equal mixture of BCE-with-logits and soft Dice loss.
 
-The instantiated AdamW optimizer uses learning rate 1e-3 and weight decay 1e-4. A later unused `lr=5e-4` assignment does not change that optimizer. A second scheduler assignment overrides the first: effective ReduceLROnPlateau patience is 3, not 5. The notebook also calls `model.train()`, which switches its frozen encoder into training mode; keeping that encoder in evaluation mode is a reproducibility fix on the plan.
+The instantiated AdamW optimizer uses learning rate 1e-3 and weight decay 1e-4. A later unused `lr=5e-4` assignment does not change that optimizer. A second scheduler assignment overrides the first: effective ReduceLROnPlateau patience is 3, not 5. The notebook also calls `model.train()`, which switches its frozen encoder into training mode; the Phase 1 notebook preparation command creates an unexecuted corrected copy that keeps the encoder in evaluation mode.
 
 The dataset uses L1C imagery while the configured model modality is S2L2A. The impact of this mismatch and the per-tile normalisation on pretrained features has not been evaluated.
 
@@ -52,7 +52,7 @@ The original sample alert and `src/alert_packet.py` remain schema 1.0 historical
 
 ## Known limitations
 
-There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no negative-scene benchmark. Input support is restricted to the documented shape and band order. The service reloads its model for each request and retains outputs on disk. The dashboard uses direct inference by default; its optional local API mode can trigger duplicate work after an HTTP timeout.
+There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no negative-scene benchmark. Input support is restricted to the documented shape and band order. The service caches one model per worker, serializes inference, and writes isolated request outputs. Output cleanup is operator-managed. The dashboard uses direct inference by default; its optional local API mode stops on timeout without launching duplicate local work. See [Phase 1](PHASE_1.md).
 
 The hackathon presentation discusses orbital and INT8 deployment. This repository contains no device-specific benchmark, quantised artifact, radiation-tolerance evidence, or flight-software qualification. Those are prospective research directions.
 

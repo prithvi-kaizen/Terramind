@@ -44,3 +44,7 @@ Full dataset training, common-metric evaluation, independent test-set performanc
 - Link check: repository validation checks local document and image targets.
 
 The application design is inherited. This setup does not claim a visual, accessibility, or mobile-layout redesign.
+
+## Phase 1 verification
+
+Phase 1 adds shared cached inference and reproducible benchmark/evaluation commands. All 42 local tests and both Linux CPU CI jobs passed. See [the Phase 1 report](phase-1-report.md) for exact-mask regression, adapter/cache checks, the measured CPU baseline, and remaining dataset-dependent evaluation.

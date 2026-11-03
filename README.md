@@ -59,7 +59,7 @@ python infer.py \
   --threshold 0.5
 ```
 
-The output directory contains `<tile>_mask.tiff` and `<tile>_alert.json`. Existing files with the same tile stem are overwritten. The runtime selects Apple MPS, CUDA, or CPU based on availability.
+The output directory contains `<tile>_mask.tiff` and `<tile>_alert.json`. Each request writes into a unique subdirectory; use the returned artifact paths. The runtime selects Apple MPS, CUDA, or CPU based on availability.
 
 ### Local API
 
@@ -144,11 +144,13 @@ python scripts/validate_repository.py
 python -m pytest
 ```
 
-The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 27 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 42 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+
+The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evaluation manifests, and output retention. Phase 1 software is implemented; full-dataset and real-plume quality evaluation still require external data.
 
 ## Next steps
 
-The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) covers shared and benchmarked inference, inexpensive plume-candidate checks, and targeted training with optional temporal corroboration. It defines compute limits and acceptance checks for each phase; these improvements are planned, not current capabilities. Physical emission estimates and embedded deployment remain later research work.
+The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) covers shared and benchmarked inference, inexpensive plume-candidate checks, and targeted training with optional temporal corroboration. It defines compute limits and acceptance checks for each phase. Phase 1 software is available; Phase 2 candidate checks and Phase 3 training/corroboration remain planned. Physical emission estimates and embedded deployment remain later research work.
 
 ## Attribution and licensing
 
