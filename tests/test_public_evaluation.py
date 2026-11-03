@@ -60,3 +60,12 @@ def test_synthetic_archive_matching_and_complete_report(tmp_path,monkeypatch):
     assert report['summary']['pixels']['iou']==1
     assert report['summary']['evaluated']==1 and report['summary']['failed']==0
     assert report['tiles'][0]['location']=='2'
+
+
+def test_taco_join_uses_source_archive_and_rejects_duplicates():
+    rows=[{'id':kind,'internal:parent_id':0,'internal:source_file':country}
+          for country in ['Algeria','Argentina'] for kind in ['target','bg0','plume']]
+    selected=public.select_catalog_leaves(rows,0,'Argentina')
+    assert len(selected)==3 and all(r['internal:source_file']=='Argentina' for r in selected)
+    with pytest.raises(ValueError,match='exactly one'):
+        public.select_catalog_leaves(rows+[rows[-1]],0,'Argentina')

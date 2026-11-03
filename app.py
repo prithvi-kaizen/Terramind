@@ -174,13 +174,15 @@ st.markdown("""
 <div class="topnav">
   <div>
     <span class="topnav-brand">MethanePulse</span>
-    <span class="topnav-sub">Orbital methane detection · TerraMind-1.0-small</span>
+    <span class="topnav-sub">Sentinel-2 research prototype · TerraMind-1.0-small</span>
   </div>
   <div style="font-size:0.78rem;color:#8b949e">
-    Val IoU 0.3257 &nbsp;·&nbsp; 85 MB &nbsp;·&nbsp; 616K params
+    Synthetic training &nbsp;·&nbsp; 85 MiB checkpoint
   </div>
 </div>
 """, unsafe_allow_html=True)
+
+st.caption("Research prototype trained on simulated plumes. Real-scene testing shows frequent false positives. Area-based severity is not an emission-rate measurement.")
 
 tab_demo, tab_alerts, tab_model = st.tabs(["Demo", "Alert Log", "Model Card"])
 
@@ -302,7 +304,9 @@ with tab_demo:
                 )
                 if det.get("centroid_geographic"):
                     st.markdown("<div style='height:0.6rem'></div>", unsafe_allow_html=True)
-                    st.caption(f"Centroid  {det['centroid_geographic']}")
+                    st.caption(f"Projected plume centroid (x, y): {det['centroid_geographic']}")
+                if det.get('centroid_wgs84'):
+                    st.caption(f"WGS84 plume centroid (lon, lat): {det['centroid_wgs84']}")
             with st.expander("Alert packet JSON"):
                 st.json(pkt)
         else:
@@ -384,7 +388,7 @@ with tab_model:
             <div class="arch-block">
               <div class="arch-block-title arch-train">Seg Decoder &nbsp;·&nbsp; TRAINABLE</div>
               <div class="arch-block-body">
-                5× TransposeConv2d<br>+ BatchNorm + ReLU<br>
+                4× TransposeConv2d<br>+ BatchNorm + ReLU + 1×1 Conv<br>
                 Output &nbsp;<code style="background:#0d1117;padding:1px 6px;border-radius:4px">512 × 512</code>&nbsp; binary mask
               </div>
             </div>
@@ -415,7 +419,8 @@ with tab_model:
         """, unsafe_allow_html=True)
 
     with col_cfg:
-        st.markdown('<p class="section-label">Training Configuration</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-label">Historical Notebook Configuration</p>', unsafe_allow_html=True)
+        st.caption("Checkpoint-to-training-run association remains unknown. These settings describe the notebook, not a newly reproduced run.")
         st.markdown("""
         <div class="cfg-grid">
           <div class="cfg-item">
@@ -436,7 +441,7 @@ with tab_model:
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Patience</div>
-            <div class="cfg-val">5 epochs</div>
+            <div class="cfg-val">3 epochs</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Epochs trained</div>
@@ -444,7 +449,7 @@ with tab_model:
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Batch size</div>
-            <div class="cfg-val">8</div>
+            <div class="cfg-val">2</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Seg loss weight</div>
@@ -464,11 +469,11 @@ with tab_model:
         st.markdown("<div style='height:1.4rem'></div>", unsafe_allow_html=True)
         st.markdown('<p class="section-label">Known Limitations</p>', unsafe_allow_html=True)
         limitations = [
-            ("IoU ceiling 0.33", "noisy MBMP pseudo-labels cap supervision quality; best val IoU 0.3257"),
-            ("Severity proxy",   "coverage-% used as emission-rate proxy — not physically grounded"),
-            ("No temporal fusion", "single acquisition; surface artifacts cause false positives"),
-            ("CRS mismatch",     "centroid output in projected CRS, not WGS84 lat/lon"),
-            ("Limited eval",     "validated on 10 geographic locations only"),
+            ("Real-scene errors", "external stress testing found poor mask overlap and frequent false positives"),
+            ("Severity proxy", "LOW/MEDIUM/HIGH describe a learned area class, not methane flux or hazard"),
+            ("Single acquisition", "no temporal corroboration or emission-source localisation"),
+            ("Uncalibrated probabilities", "model probabilities are not verified leak probabilities"),
+            ("Synthetic supervision", "training masks derive from simulated plume transmissivity"),
         ]
         for title, body in limitations:
             st.markdown(
@@ -483,50 +488,42 @@ with tab_model:
     col_base, col_chart = st.columns([1, 1.2], gap="large")
 
     with col_base:
-        st.markdown('<p class="section-label">Baseline Comparison</p>', unsafe_allow_html=True)
-
-        # Pre-format numeric columns as strings to avoid jinja2 / Styler dependency
-        df_display = pd.DataFrame({
-            "Model"      : ["Physics (MBMP)", "TinyUNet (scratch)", "MethanePulse (Linear Head)"],
-            "Val IoU"    : ["0.1210", "0.4897", "0.3257"],
-            "Val F1"     : ["0.2080", "0.6575", "0.5112"],
-            "Precision"  : ["—",      "0.7565", "—"],
-            "Recall"     : ["0.2203", "0.5813", "0.5110"],
-            "FP Rate"    : ["0.0044", "0.0010", "—"],
-            "Params"     : ["0",      "~2 M",   "616 K"],
-            "Size (MB)"  : ["—",      "~8",     "85"],
-            "Trainable"  : ["None",   "Full",   "Decoder + Head"],
-        })
-        st.dataframe(df_display, hide_index=True, height=145, width="stretch")
-
-        st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
-
-        # Mini bar chart — IoU comparison
-        fig, ax = plt.subplots(figsize=(5.5, 2.4), facecolor="#0d1117")
-        models  = ["Physics\n(MBMP)", "TinyUNet\n(scratch)", "MethanePulse\n(Linear Head)"]
-        metrics = {
-            "Val IoU" : ([0.1210, 0.4897, 0.3257], "#01696f"),
-            "Val F1"  : ([0.2080, 0.6575, 0.5112], "#4f98a3"),
-            "Recall"  : ([0.2203, 0.5813, 0.5110], "#6daa45"),
-        }
-        x     = np.arange(len(models))
-        width = 0.26
-        ax.set_facecolor("#0d1117")
-        for i, (label, (vals, color)) in enumerate(metrics.items()):
-            bars = ax.bar(x + i * width, vals, width, label=label,
-                          color=color, edgecolor="#161b22", linewidth=0.5)
-        ax.set_xticks(x + width); ax.set_xticklabels(models, fontsize=8, color="#8b949e")
-        ax.tick_params(colors="#8b949e", labelsize=8)
-        ax.spines[:].set_visible(False)
-        ax.set_ylim(0, 0.80)
-        ax.set_ylabel("Score", color="#8b949e", fontsize=8)
-        ax.legend(facecolor="#161b22", labelcolor="#8b949e", fontsize=7.5,
-                  framealpha=0.8, loc="upper left", ncol=3)
-        fig.tight_layout(pad=0.8)
-        st.pyplot(fig); plt.close()
+        st.markdown('<p class="section-label">Recorded Experiments</p>', unsafe_allow_html=True)
+        st.caption("Historical records use different aggregation rules and do not form a controlled model comparison.")
+        st.dataframe(pd.DataFrame({
+            "Record": ["SWIR local anomaly", "TinyUNet", "TerraMind notebook", "Separate TerraMind log"],
+            "IoU": ["0.1210", "0.4897", "0.3298", "0.3257"],
+            "F1": ["0.2080", "0.6575", "not recorded", "0.5110 at best-IoU epoch"],
+            "Aggregation": ["per tile", "global pixels", "per batch", "evaluator unverified"],
+        }), hide_index=True, width="stretch")
+        st.markdown('<p class="section-label">External Evaluation</p>', unsafe_allow_html=True)
+        report_path = DOCS_DIR / "evaluation" / "real-results.json"
+        if report_path.exists():
+            report = json.loads(report_path.read_text())
+            measured = report["summary"]
+            st.write(f"Real-scene stress test: {measured['evaluated']} evaluated inputs; {measured['failed']} validation failures.")
+            st.write(f"Pixel IoU {measured['pixels']['iou']:.4f}; F1 {measured['pixels']['f1']:.4f}.")
+            if measured["false_positive_scene_rate"] is not None:
+                st.write(f"Clean-reference false-positive scene rate: {measured['false_positive_scene_rate']:.1%}.")
+            st.caption("MethaneSET test subset with paired provider-curated clean references. An explicit resize adapter returns probabilities to the native label grid. This out-of-domain result does not establish operational leak detection.")
+        else:
+            st.info("External evaluation reports are being prepared.")
+        synthetic_path = DOCS_DIR / "evaluation" / "geoch4-complete.json"
+        if synthetic_path.exists():
+            synthetic = json.loads(synthetic_path.read_text())
+            st.write("Synthetic corpus audit (includes training data):")
+            st.dataframe(pd.DataFrame([
+                {"Split": name, "Evaluated": result["evaluated"], "Failures": result["failed"],
+                 "Pixel IoU": result["pixels"]["iou"] if result["pixels"] else None,
+                 "Pixel F1": result["pixels"]["f1"] if result["pixels"] else None}
+                for name,result in synthetic["by_split"].items()
+            ]),hide_index=True,width="stretch")
+            st.caption("Published split membership may overlap checkpoint training. The combined score is not held-out test accuracy.")
+        st.markdown("[Evaluation protocol and evidence](https://github.com/prithvi-kaizen/Terramind/blob/main/docs/EVALUATION.md)")
 
     with col_chart:
-        st.markdown('<p class="section-label">Training History</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-label">Historical Training Log</p>', unsafe_allow_html=True)
+        st.caption("Preserved log; its association with the included checkpoint is unverified.")
         history = load_history()
         if history:
             epochs   = [h["epoch"]      for h in history]

@@ -50,9 +50,15 @@ The maintained CLI uses schema version 1.1:
 
 The original sample alert and `src/alert_packet.py` remain schema 1.0 historical artifacts. They do not contain the maintained coordinate correction.
 
+## External real-scene stress test
+
+The existing checkpoint at threshold 0.5 was evaluated on a deterministic MethaneSET test subset: 64 targets and 64 provider-curated clean references. One pair had invalid pixels and was rejected, leaving 63 positives and 63 negatives. An explicitly declared offline resize adapter returned probability maps to the native label grid. Pixel IoU was 0.01742 and F1 was 0.03425; 62 of 63 clean references triggered predictions. Only 33 of 63 positive scenes had any overlap with their annotated plume.
+
+These results demonstrate poor real-scene transfer under this adapter. They do not establish operational methane detection. The subset is small and includes correlated sites; references are provider-labeled rather than independently reviewed by this project. The initial external run had an archive-local catalog ID join bug and is superseded by a corrected rerun. See [the evaluation protocol and reports](EVALUATION.md).
+
 ## Known limitations
 
-There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no negative-scene benchmark. Input support is restricted to the documented shape and band order. The service caches one model per worker, serializes inference, and writes isolated request outputs. Output cleanup is operator-managed. The dashboard uses direct inference by default; its optional local API mode stops on timeout without launching duplicate local work. See [Phase 1](PHASE_1.md).
+There is one acquisition per inference, no temporal comparison, no atmospheric correction pipeline, no emission-rate estimation, and no deployment-matched negative-scene benchmark. Input support is restricted to the documented shape and band order. The service caches one model per worker, serializes inference, and writes isolated request outputs. Output cleanup is operator-managed. The dashboard uses direct inference by default; its optional local API mode stops on timeout without launching duplicate local work. See [Phase 1](PHASE_1.md).
 
 The hackathon presentation discusses orbital and INT8 deployment. This repository contains no device-specific benchmark, quantised artifact, radiation-tolerance evidence, or flight-software qualification. Those are prospective research directions.
 

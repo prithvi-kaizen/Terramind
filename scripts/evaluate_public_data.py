@@ -164,6 +164,15 @@ def resize_prediction(payload, checkpoint):
     return native>.5,crs,transform
 
 
+def select_catalog_leaves(records, parent_index, source_file):
+    """TACO child IDs are local to a source archive, not globally unique."""
+    selected=[r for r in records if int(r['internal:parent_id'])==parent_index
+              and r['internal:source_file']==source_file and r['id'] in ('target','bg0','plume')]
+    if len(selected)!=3 or {r['id'] for r in selected}!={'target','bg0','plume'}:
+        raise ValueError('Expected exactly one target/reference/mask in the selected source archive')
+    return selected
+
+
 def real(args):
     import pandas as pd
     output=Path(args.output);output.mkdir(parents=True,exist_ok=True)
@@ -179,13 +188,13 @@ def real(args):
     eligible['rank']=eligible['id'].map(lambda value:hashlib.sha256(('terramind-real-v1:'+value).encode()).hexdigest())
     selected=eligible.sort_values('rank').head(args.real_samples)
     cohort=[{'id':r['id'],'country':r['site:country'],'site':r['site:location_name'],'split':r['split'],
-        'sensor':r['target:sensor'],'date':str(r['stac:time_start']),'parent_index':int(r['internal:current_id'])} for _,r in selected.iterrows()]
+        'sensor':r['target:sensor'],'date':str(r['stac:time_start']),'parent_index':int(r['internal:current_id']),'source_file':r['internal:source_file']} for _,r in selected.iterrows()]
     save(output/'real-cohort.json',{'dataset_revision':revision,'selection':'first N test Sentinel-2 IDs sorted by sha256(terramind-real-v1:+id); chosen before predictions','selected':cohort})
     jobs=[]
+    leaf_records=leaves[['id','internal:parent_id','internal:source_file','internal:offset','internal:size']].to_dict('records')
     for item in cohort:
-        records=leaves[(leaves['internal:parent_id']==item['parent_index'])&leaves['id'].isin(['target','bg0','plume'])]
-        if set(records['id'])!={'target','bg0','plume'}:raise ValueError('Incomplete catalog entry')
-        for _,leaf in records.iterrows():
+        records=select_catalog_leaves(leaf_records,item['parent_index'],item['source_file'])
+        for leaf in records:
             jobs.append((item['id'],leaf['id'],base+urllib.parse.quote(leaf['internal:source_file']),int(leaf['internal:offset']),int(leaf['internal:size'])))
     def download(job):
         sample,kind,url,start,size=job

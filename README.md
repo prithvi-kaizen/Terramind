@@ -26,7 +26,7 @@ Screenshot of a verified sample prediction on the hosted app. The displayed seve
 - Five research notebooks covering data exploration, a spectral baseline, TinyUNet, and the TerraMind model.
 - The trained checkpoint, sample input, saved sample outputs, and experiment logs.
 
-This is a research prototype. Severity is derived from mask area, not a measured methane emission rate. Satellite acquisition gaps, false positives, and performance on real plumes remain open problems. Read the [model card](docs/MODEL_CARD.md) before interpreting predictions. The inherited dashboard still contains historical model-card values; the model card in this repository records the evidence and discrepancies explicitly.
+This is a research prototype. Severity is derived from mask area, not a measured methane emission rate. Satellite acquisition gaps, false positives, and performance on real plumes remain open problems. Read the [model card](docs/MODEL_CARD.md) before interpreting predictions. A fixed real-scene stress test evaluated 63 plume scenes and 63 clean references: pixel IoU was 0.0174, and 62 of 63 references triggered false positives. The current checkpoint is unsuitable for operational leak detection. See the [external evaluation protocol and results](docs/EVALUATION.md).
 
 ## Run locally
 
@@ -144,9 +144,9 @@ python scripts/validate_repository.py
 python -m pytest
 ```
 
-The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 42 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 47 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
 
-The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evaluation manifests, and output retention. Phase 1 software is implemented; full-dataset and real-plume quality evaluation still require external data.
+The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evaluation manifests, and output retention. Phase 1 software is deployed; external evaluation evidence is documented in the [public-data report](docs/EVALUATION.md).
 
 ## Next steps
 

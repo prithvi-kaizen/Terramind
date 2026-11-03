@@ -1,6 +1,6 @@
 # Phase 1 implementation report
 
-Updated 3 November 2026. Software implementation is complete on `codex/phase-1-inference-baseline`; full-dataset and independent real-plume evaluation remain unavailable. This report does not establish improved detection quality. No production deployment was performed.
+Updated 3 November 2026. Software implementation is complete on `codex/phase-1-inference-baseline`; full-dataset and independent real-plume evaluation remain unavailable. This report does not establish improved detection quality. Phase 1 was subsequently merged and deployed on 3 November 2026; hosted sample inference and model identity were verified. See [the external evaluation report](EVALUATION.md) for follow-up evidence.
 
 ## Changes
 
