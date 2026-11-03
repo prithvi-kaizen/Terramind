@@ -1,0 +1,40 @@
+name: Public dataset evaluation
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/evaluate_public_data.py
+      - .github/workflows/evaluation.yml
+permissions:
+  contents: read
+jobs:
+  evaluate:
+    strategy:
+      fail-fast: false
+      matrix:
+        dataset: [synthetic, real]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      HF_HUB_OFFLINE: '1'
+      OMP_NUM_THREADS: '2'
+      MPLCONFIGDIR: /tmp/terramind-matplotlib
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            deployment/requirements.txt
+      - name: Install CPU environment
+        run: python -m pip install -r deployment/requirements.txt
+      - name: Evaluate fixed checkpoint on public data
+        run: python -u scripts/evaluate_public_data.py ${{ matrix.dataset }} --data data/raw/evaluation --output outputs/public-evaluation --remove-archives
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluation-${{ matrix.dataset }}
+          path: outputs/public-evaluation/*.json
+          retention-days: 30
