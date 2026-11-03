@@ -50,23 +50,4 @@ jobs:
       - name: Check dependency consistency
         run: python -m pip check
       - name: Run real model through the cloud entrypoint
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import json
-          import rasterio
-          from streamlit.testing.v1 import AppTest
-
-          app = AppTest.from_file('deployment/streamlit_app.py').run(timeout=120)
-          assert not app.exception, list(app.exception)
-          app.button[0].click().run(timeout=120)
-          assert not app.exception, list(app.exception)
-          packet = app.session_state['packet']
-          assert packet['schema_version'] == '1.1'
-          assert packet['detection']['plume_pixel_count'] == 1244
-          assert packet['detection']['centroid_wgs84'] is not None
-          with rasterio.open(packet['artifacts']['mask_path']) as mask:
-              assert mask.shape == (512, 512)
-              assert mask.count == 1
-          print('Cloud entrypoint: real CPU inference passed without model downloads')
-          PY
+        run: python scripts/smoke_inference.py

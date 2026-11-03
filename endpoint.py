@@ -12,7 +12,7 @@ import math
 
 BASE_DIR = Path(__file__).parent
 sys.path.insert(0, str(BASE_DIR))
-from infer import run_inference
+from methanepulse.runtime import run_inference
 from rasterio.errors import RasterioIOError
 
 app = Flask(__name__)

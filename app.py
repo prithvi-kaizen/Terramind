@@ -13,7 +13,7 @@ API_URL = f"http://127.0.0.1:{os.environ.get('METHANEPULSE_PORT', '5001')}/predi
 INFERENCE_MODE = os.environ.get("METHANEPULSE_INFERENCE_MODE", "direct")
 
 sys.path.insert(0, str(Path(__file__).parent))
-from infer import run_inference
+from methanepulse.runtime import run_inference
 
 # ── Auto-launch Flask endpoint if not already running ──────────
 if INFERENCE_MODE == "api" and "_flask_proc" not in st.session_state:
@@ -167,7 +167,7 @@ def load_history():
 
 def load_alerts():
     RESULTS.mkdir(parents=True, exist_ok=True)
-    return [json.load(open(f)) for f in sorted(RESULTS.glob("*_alert.json"))]
+    return [json.load(open(f)) for f in sorted(RESULTS.rglob("*_alert.json"))]
 
 # ── Top nav
 st.markdown("""
@@ -231,13 +231,15 @@ with tab_demo:
                             API_URL,
                             files={"file": f},
                             data={"threshold": threshold},
-                            timeout=10,
+                            timeout=(5, 180),
                         )
-                    if response.ok:
-                        packet = response.json()
-                        progress.progress(90, text="Received response from endpoint...")
-                except Exception:
-                    packet = None
+                    response.raise_for_status()
+                    packet = response.json()
+                    progress.progress(90, text="Received response from endpoint...")
+                except Exception as exc:
+                    progress.empty()
+                    st.error(f"API request failed: {exc}. The server may still be processing it; no automatic retry was started.")
+                    st.stop()
 
             if packet is None:
                 # Direct in-process inference — no Flask server required
