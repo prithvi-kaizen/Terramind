@@ -6,7 +6,7 @@ Status: updated 3 November 2026. Phase 1 software is implemented; full-data and 
 
 Improve the reliability and efficiency of the existing Sentinel-2 methane-plume prototype while retaining a CPU-compatible demo. Adapt candidate vetting, structured plume outputs, and repeated-observation checks from MAPL-EMIT to the data and resources available here.
 
-The repository already includes a trained checkpoint, sample GeoTIFF, CLI, local Flask API, a [public Streamlit demo](https://terramind-demo.streamlit.app/), 27 runtime tests, and a Linux CPU inference smoke check. See [VALIDATION.md](VALIDATION.md). Full training data and an independent real-plume benchmark are not included. Historical experiment logs disagree, and the checkpoint's training-run association remains unresolved; see [MODEL_CARD.md](MODEL_CARD.md).
+The repository already includes a trained checkpoint, sample GeoTIFF, CLI, local Flask API, a [public Streamlit demo](https://terramind-demo.streamlit.app/), 42 runtime tests, and a Linux CPU inference smoke check. See [VALIDATION.md](VALIDATION.md). Full training data and an independent real-plume benchmark are not included. Historical experiment logs disagree, and the checkpoint's training-run association remains unresolved; see [MODEL_CARD.md](MODEL_CARD.md).
 
 This plan replaces the previous five-milestone roadmap. It retains its requirements for checkpoint traceability, consistent evaluation, shared inference, accurate documentation, and release validation within three implementation phases.
 

@@ -42,7 +42,13 @@ The saved run measured 12.338 seconds from fresh Python process start to first o
 | Independent real-plume performance | Pending independent observations/labels |
 | Historical checkpoint/training-log association | Unknown; no new evidence resolves the disagreement |
 | Corrected training configuration | Working copy generated and tested; training not run |
-| Linux CPU deployment installation and smoke | Workflow updated; remote result recorded below when available |
+| Linux CPU deployment installation and smoke | Passed both jobs in the linked GitHub Actions run |
 | Output retention | Manual cleanup command implemented; no automatic scheduler or disk quota |
 
 Phase 2 software work can proceed from these interfaces. Detection-quality claims and filter promotion must wait for labeled evaluation data. The [data inventory](phase-1-data-inventory.json) lists missing inputs. Additional temporal data and model retraining belong to Phase 3.
+
+## Linux CI and review
+
+Both `validate` and `cloud-smoke` passed in [GitHub Actions run 41579345593](https://github.com/prithvi-kaizen/Terramind/actions/runs/41579345593) for implementation revision `8f09fec`. This includes a clean Linux CPU dependency installation, dependency consistency, repository checks, unit tests, and the real CPU adapter/cache smoke check. Subsequent report-only edits do not change the tested implementation.
+
+The implementation is available in [draft pull request 1](https://github.com/prithvi-kaizen/Terramind/pull/1). Additional local checks verified actual CLI output against the complete reference mask and used a simulated API timeout in Streamlit AppTest to confirm that the dashboard displays an error without calling local inference.
