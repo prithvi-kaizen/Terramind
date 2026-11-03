@@ -69,3 +69,20 @@ def test_taco_join_uses_source_archive_and_rejects_duplicates():
     assert len(selected)==3 and all(r['internal:source_file']=='Argentina' for r in selected)
     with pytest.raises(ValueError,match='exactly one'):
         public.select_catalog_leaves(rows+[rows[-1]],0,'Argentina')
+
+
+def test_parallel_archive_download_writes_exact_ranges(tmp_path,monkeypatch):
+    content=b'abcdefghijklmno'
+    class Response:
+        status=206
+        headers={'Content-Range':'bytes 0-0/15'}
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+    # certifi is only needed for actual network access, not the minimal test job.
+    import sys
+    monkeypatch.setitem(sys.modules,'certifi',SimpleNamespace(where=lambda:None))
+    monkeypatch.setattr(public.urllib.request,'urlopen',lambda *a,**kw:Response())
+    monkeypatch.setattr(public,'fetch',lambda url,byte_range:content[byte_range[0]:sum(byte_range)])
+    path=tmp_path/'download.tar'
+    public.download_archive('https://example.test/archive',path,workers=2,chunk_size=4)
+    assert path.read_bytes()==content

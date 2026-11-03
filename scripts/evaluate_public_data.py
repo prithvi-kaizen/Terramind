@@ -86,6 +86,32 @@ def metadata(checkpoint):
         'scene_precision':'null when no negative scenes','failed_samples':'listed and excluded from metric denominator'}}
 
 
+def download_archive(url, destination, workers=4, chunk_size=16*1024*1024):
+    """Bounded parallel HTTP ranges; publisher checksum is verified afterward."""
+    import certifi
+    context=ssl.create_default_context(cafile=certifi.where())
+    request=urllib.request.Request(url,headers={'Range':'bytes=0-0'})
+    with urllib.request.urlopen(request,timeout=90,context=context) as response:
+        content_range=response.headers.get('Content-Range','')
+        if response.status!=206 or not re.fullmatch(r'bytes 0-\d+/\d+',content_range):
+            raise ValueError('Archive endpoint must support exact byte ranges')
+        size=int(content_range.split('/')[-1])
+    destination=Path(destination)
+    with destination.open('wb') as stream:stream.truncate(size)
+    chunks=[(start,min(chunk_size,size-start)) for start in range(0,size,chunk_size)]
+    def transfer(chunk):
+        start,length=chunk
+        payload=fetch(url,byte_range=(start,length))
+        with destination.open('r+b') as stream:
+            stream.seek(start);stream.write(payload)
+        return length
+    done=0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for length in pool.map(transfer,chunks):
+            done+=length
+            print(f'Download {destination.name}: {done}/{size} bytes',flush=True)
+
+
 def synthetic(args):
     output=Path(args.output);output.mkdir(parents=True,exist_ok=True)
     root=Path(args.data);root.mkdir(parents=True,exist_ok=True)
@@ -95,7 +121,7 @@ def synthetic(args):
     for split in splits:
         path=root/f'{split}.tar'
         url=f'https://zenodo.org/records/16813369/files/{split}.tar?download=1'
-        if not path.exists(): fetch(url,path)
+        if not path.exists(): download_archive(url,path)
         digest=hashlib.md5()
         with path.open('rb') as f:
             while chunk:=f.read(1024*1024):digest.update(chunk)
