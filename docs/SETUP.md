@@ -84,3 +84,7 @@ python -m pip check
 ```
 
 Repository validation checks structure and artifact integrity; tests exercise input validation and API error handling. Neither substitutes for training-data evaluation. See [VALIDATION.md](VALIDATION.md) for the checks actually performed during this setup.
+
+## Phase 1 tools
+
+See [PHASE_1.md](PHASE_1.md) for CPU benchmarks, evaluation manifests, corrected working-notebook preparation, unique request output directories, and retention commands.

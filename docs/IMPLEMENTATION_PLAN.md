@@ -1,6 +1,6 @@
 # Terramind implementation plan: three phases
 
-Status: proposed work, 15 October 2026. The tasks below are not implemented capabilities.
+Status: updated 3 November 2026. Phase 1 software is implemented; full-data and real-plume evaluation remain pending. Phases 2 and 3 are proposed work. See [the Phase 1 report](phase-1-report.md).
 
 ## Objective and starting point
 
@@ -128,3 +128,102 @@ Implement Phase 1, then Phase 2, then Phase 3. The estimates total 12–19 devel
 Real-plume and negative-scene evidence is a dependency for detection-quality claims, not for implementing the Phase 1 refactor or Phase 2 output schema. If that evidence is unavailable, ship the software improvements with the limitation stated and leave training/corroboration tasks incomplete.
 
 Defer physical emission-rate estimation, learned source localisation, EMIT hyperspectral ingestion, large synthetic training campaigns, and orbital deployment. A compact student model, quantisation, container packaging, and accelerator-specific tuning are follow-up work only if the measured CPU cost still exceeds the deployment budget; validate accuracy and hardware-specific speed before claiming a benefit.
+
+## Execute the phases with Codex
+
+Open this repository as the Codex workspace. Run the prompts below in order, one phase at a time. Each prompt refers to the tasks and acceptance gate above. Before starting the next phase, inspect the previous phase's diff and evidence report. Keep each phase on its own `codex/` branch; use smaller commits for refactoring, feature changes, and documentation so changes remain reviewable. Publishing changes to the hosted demo should follow explicit deployment instructions.
+
+For every phase, Codex should inspect repository instructions, current files, and uncommitted changes first. Preserve unrelated work and the existing checkpoint, sample input, and historical experiment artifacts. Record actual commands and results in `docs/phase-N-report.md`, replacing `N` with the phase number. Separate implemented software, completed experiments, failed checks, and unavailable evidence. Run the existing repository validator and relevant tests; use the full Linux CPU smoke check for inference/dependency changes. Do not fabricate benchmark results, labels, or training history.
+
+### Codex prompt for Phase 1
+
+```text
+Implement Phase 1 of docs/IMPLEMENTATION_PLAN.md in this repository.
+Read the complete plan and follow its compute constraints and acceptance gate.
+Create or use branch codex/phase-1-inference-baseline after checking current work.
+
+Start with a shared methanepulse package and thin CLI, Flask, and Streamlit
+adapters. Separate model loading from prediction, add a bounded model cache
+with checkpoint/configuration invalidation, and serialize model execution.
+Preserve per-session output isolation and prevent duplicate inference retries.
+Keep preprocessing changes separate from the behavior-preserving refactor.
+
+Add reproducible CPU benchmarking, split/evaluation manifest support, and a
+data inventory. Record hardware, thread settings, cold/warm timings, memory,
+checkpoint hash, and forward-pass counts. Run the sample benchmark locally.
+Compare the complete sample mask with the existing reference, not just its
+1,244-pixel foreground count. Verify georeferencing and adapter equivalence.
+
+Run meaningful cache, concurrency, input-validation, and regression tests,
+the repository validator, and the real CPU cloud-entrypoint smoke check.
+Do not retrain or claim model-quality improvements during this refactor.
+If full evaluation data is missing, implement and test the evaluator using
+fixtures, identify the missing evidence, and continue independent work.
+Write docs/phase-1-report.md with changes, commands, measurements, limitations,
+and the acceptance-gate outcome. Finish with reviewable changes; do not begin
+Phase 2 or publish a deployment automatically.
+```
+
+### Codex prompt for Phase 2
+
+```text
+Implement Phase 2 of docs/IMPLEMENTATION_PLAN.md using the accepted Phase 1
+interfaces. Inspect docs/phase-1-report.md and verify the required software
+checks before proceeding. Create or use branch codex/phase-2-plume-candidates.
+
+Extract disconnected plume candidates and export their geometry, area,
+centroids, probability summaries, checkpoint identity, and quality flags.
+Use correct CRS-aware areas and WGS84 GeoJSON. Version the alert schema and
+document compatibility with existing schema 1.1 consumers. Preserve the raw
+mask and probability map alongside any optional filtered result.
+
+Add edge, small-area, invalid-pixel, and threshold-sensitivity flags using
+the existing probability map. Keep them informational unless validation
+supports filtering. Keep evidence states separate from probabilities and
+area-based severity. Add candidate inspection and artifact downloads to the
+dashboard and replace unsupported model-card values with verified metadata.
+
+Test empty and multi-component masks, nodata, rotated transforms, projected
+and geographic CRS, schema compatibility, exports, and the actual dashboard
+workflow. Verify one default model pass per tile and compare warm p95 timing
+against Phase 1, targeting no more than 20 percent additional latency.
+Run the repository validator, relevant tests, and real CPU smoke check.
+If labeled evaluation data is available, compare each quality rule separately
+and together using the plan's recall-loss tolerance. Otherwise keep filters
+off by default and report that detection-quality improvement is unverified.
+Write docs/phase-2-report.md with evidence and unresolved dependencies.
+Finish with reviewable changes; do not begin Phase 3 or deploy automatically.
+```
+
+### Codex prompt for Phase 3
+
+```text
+Implement Phase 3 of docs/IMPLEMENTATION_PLAN.md after reviewing the earlier
+phase reports. Create or use branch codex/phase-3-reliability. Inventory actual
+data, labels, aligned dates, hardware, and storage before running experiments.
+Do not assume the full training corpus or a real-plume benchmark is present.
+
+Build reviewed split manifests, frozen-encoder feature caching, and bounded
+head-training/evaluation commands. Validate cache equivalence and invalidation.
+Keep the encoder in evaluation mode and account for augmentations in cache
+keys. Limit the initial search to three configurations; report cache creation
+cost, training resources, and validation outcomes. Do not launch paid compute
+or large downloads without authorization. When local data is insufficient,
+complete runnable tooling and tests and list the exact missing inputs.
+
+Add optional corroboration for up to three supplied, aligned dates, rejecting
+incompatible coverage or registration. Add an optional flipped-input agreement
+check with at most one extra pass, disabled by default; cap automatic batch
+routing at 10 percent. Track date-specific passes separately and reuse only
+compatible cached predictions. Do not infer source location or emission rate.
+
+Use held-out evaluation and the plan's false-positive/recall acceptance gate
+to decide whether a trained checkpoint should replace the existing one.
+Report uncertainty and retain the current checkpoint if evidence is inadequate.
+Run targeted training/cache/temporal tests, repository validation, and CPU
+smoke checks. Write docs/phase-3-report.md and a quality-versus-compute report.
+Update documentation only for capabilities actually verified. Prepare a
+release checklist and rollback instructions; do not publish automatically.
+```
+
+When a phase ends, ask Codex to explain any unmet acceptance criteria before commissioning the next phase. Missing evaluation data can leave research tasks pending while tested software work proceeds; it cannot establish improved real-world detection.

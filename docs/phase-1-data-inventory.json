@@ -1,0 +1,45 @@
+{
+  "updated": "2026-11-03",
+  "available": [
+    {
+      "type": "unlabeled sample tile",
+      "path": "sample_input/0___0_S2B_20240326T165849_R1000_nonorm_bands20m.tiff",
+      "count": 1
+    },
+    {
+      "type": "checkpoint",
+      "path": "terramind_methane_best.pt",
+      "training_run_association": "unknown"
+    },
+    {
+      "type": "historical predicted mask",
+      "path": "results/0___0_S2B_20240326T165849_R1000_nonorm_bands20m_mask.tiff",
+      "is_ground_truth": false
+    }
+  ],
+  "unavailable": [
+    {
+      "type": "full GeoCH4PlumeNet training/validation/test corpus",
+      "needed_for": "reproducible checkpoint evaluation and future training"
+    },
+    {
+      "type": "verified plume-free scenes",
+      "needed_for": "scene-level false-positive measurement"
+    },
+    {
+      "type": "independent real-plume labels",
+      "needed_for": "real-world validation"
+    },
+    {
+      "type": "co-registered dated tile sets",
+      "needed_for": "future temporal corroboration"
+    }
+  ],
+  "data_source": "https://zenodo.org/records/16813369",
+  "constraints": [
+    "Record access terms and label sources before acquiring or redistributing data.",
+    "No model outputs count as independent ground truth.",
+    "Group split manifests must cover train, validation and test; preserve official held-out test data."
+  ],
+  "historical_log_disagreement": "Unresolved; no checkpoint/run mapping recovered from existing artifacts."
+}
