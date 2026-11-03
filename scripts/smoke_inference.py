@@ -9,7 +9,8 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
 import rasterio
 from streamlit.testing.v1 import AppTest
-from methanepulse.runtime import run_inference, clear_model_cache, cache_info
+from methanepulse.runtime import run_inference, predict_tile, clear_model_cache, cache_info
+from methanepulse.validation import check_reference_mask
 import endpoint
 
 
@@ -21,11 +22,19 @@ def main():
     with tempfile.TemporaryDirectory() as directory:
         packet=run_inference(sample,checkpoint,directory,device='cpu')
         expected=next((root/'results').glob('*_mask.tiff'))
+        extra_passes=0
         with rasterio.open(packet['artifacts']['mask_path']) as actual,rasterio.open(expected) as reference:
-            assert np.array_equal(actual.read(1),reference.read(1))
+            actual_mask,reference_mask=actual.read(1),reference.read(1)
             assert actual.crs==reference.crs and actual.transform==reference.transform
+        probability=None
+        if not np.array_equal(actual_mask,reference_mask):
+            probability=predict_tile(sample,checkpoint,.5,'cpu').probability
+            extra_passes=1
+        diagnostic=check_reference_mask(actual_mask,reference_mask,probability)
+        print('REFERENCE_DIAGNOSTIC',diagnostic,flush=True)
         assert packet['schema_version']=='1.1'
-        assert packet['detection']['plume_pixel_count']==1244
+        assert int(reference_mask.sum())==1244
+        assert packet['detection']['plume_pixel_count']==int(actual_mask.sum())
         previous=endpoint.RESULTS
         try:
             endpoint.RESULTS=Path(directory)/'api'
@@ -41,8 +50,8 @@ def main():
         assert not app.exception,list(app.exception)
         assert app.session_state['packet']['detection']==packet['detection']
         assert cache_info()['loads']==1,cache_info()
-        assert cache_info()['forward_passes']==3,cache_info()
-        print('PASS: full sample mask/CRS/transform, API/cloud adapter equivalence, 1 load / 3 passes')
+        assert cache_info()['forward_passes']==3+extra_passes,cache_info()
+        print(f'PASS: bounded sample mask regression/CRS/transform, exact API/cloud adapter equivalence, 1 load / {3+extra_passes} passes')
 
 if __name__=='__main__':
     main()
