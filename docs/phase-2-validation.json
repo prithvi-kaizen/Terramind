@@ -1,0 +1,3731 @@
+{
+  "timestamp_utc": "2026-11-05T09:45:53.786871+00:00",
+  "dataset": "MethaneSET s2-finetune validation subset",
+  "dataset_revision": "7d2a4feb4d50701ee9962d52c2cab769e9f13ba5",
+  "checkpoint_sha256": "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0",
+  "config": {
+    "version": "candidates-v1",
+    "connectivity": 4,
+    "threshold": 0.5,
+    "min_area_m2": 1600.0,
+    "threshold_delta": 0.05,
+    "sensitive_fraction": 0.25,
+    "filter_flags": [],
+    "max_candidates": 4096,
+    "config_sha256": "c92b696e28cb308b844577fbb190f729882f00415a76697e43643311f498a38c"
+  },
+  "cohort": "phase-2-validation-cohort.json",
+  "threshold": 0.5,
+  "adaptation": "same fixed 200\u2192512\u2192200 probability adapter as the previous external stress test; areas measured geodesically on native grid",
+  "selected_pairs": 32,
+  "scored_inputs": 64,
+  "failures": [],
+  "cache": {
+    "entries": 1,
+    "loads": 1,
+    "forward_passes": 64,
+    "key": [
+      "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0",
+      "cpu",
+      "terramind-small-swir-heads-v1",
+      "swir-percentile-v1"
+    ]
+  },
+  "default_filter_flags": [],
+  "promotion": "None. Pilot evidence on an adapted, limited-site validation cohort; keep all rules informational until deployment-matched validation supports promotion.",
+  "recall_loss_tolerance_absolute": 0.02,
+  "rules": {
+    "raw": [],
+    "small_area": [
+      "small_area"
+    ],
+    "edge_contact": [
+      "edge_contact"
+    ],
+    "threshold_sensitive": [
+      "threshold_sensitive"
+    ],
+    "combined": [
+      "small_area",
+      "edge_contact",
+      "threshold_sensitive"
+    ]
+  },
+  "results": {
+    "raw": {
+      "summary": {
+        "count": 64,
+        "evaluated": 64,
+        "failed": 0,
+        "pixels": {
+          "tp": 2504,
+          "fp": 32515,
+          "fn": 27770,
+          "iou": 0.039879596744652725,
+          "f1": 0.07670041198903405
+        },
+        "mean_tile_iou": 0.018517668936407883,
+        "scene_positive_count": 32,
+        "scene_negative_count": 32,
+        "scene_recall": 0.96875,
+        "scene_precision": 0.49206349206349204,
+        "false_positive_scene_rate": 1.0,
+        "positive_scenes_with_any_mask_overlap": 19
+      }
+    },
+    "small_area": {
+      "summary": {
+        "count": 64,
+        "evaluated": 64,
+        "failed": 0,
+        "pixels": {
+          "tp": 2366,
+          "fp": 28069,
+          "fn": 27908,
+          "iou": 0.04055327974221415,
+          "f1": 0.07794560938246388
+        },
+        "mean_tile_iou": 0.033415434082237225,
+        "scene_positive_count": 32,
+        "scene_negative_count": 32,
+        "scene_recall": 0.90625,
+        "scene_precision": 0.48333333333333334,
+        "false_positive_scene_rate": 0.96875,
+        "positive_scenes_with_any_mask_overlap": 16
+      },
+      "paired_comparison": {
+        "site_clusters": 16,
+        "method": "paired site-cluster bootstrap, 1000 resamples, seed 42; limited geographic/site support",
+        "scene_recall_loss_95pct": [
+          0.0,
+          0.17857142857142858
+        ],
+        "false_positive_rate_change_95pct": [
+          -0.10344827586206896,
+          0.0
+        ]
+      }
+    },
+    "edge_contact": {
+      "summary": {
+        "count": 64,
+        "evaluated": 64,
+        "failed": 0,
+        "pixels": {
+          "tp": 2443,
+          "fp": 30119,
+          "fn": 27831,
+          "iou": 0.040451707979401584,
+          "f1": 0.0777579731364186
+        },
+        "mean_tile_iou": 0.018589751660416296,
+        "scene_positive_count": 32,
+        "scene_negative_count": 32,
+        "scene_recall": 0.96875,
+        "scene_precision": 0.49206349206349204,
+        "false_positive_scene_rate": 1.0,
+        "positive_scenes_with_any_mask_overlap": 19
+      },
+      "paired_comparison": {
+        "site_clusters": 16,
+        "method": "paired site-cluster bootstrap, 1000 resamples, seed 42; limited geographic/site support",
+        "scene_recall_loss_95pct": [
+          0.0,
+          0.0
+        ],
+        "false_positive_rate_change_95pct": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "threshold_sensitive": {
+      "summary": {
+        "count": 64,
+        "evaluated": 64,
+        "failed": 0,
+        "pixels": {
+          "tp": 2474,
+          "fp": 31406,
+          "fn": 27800,
+          "iou": 0.040110246433203635,
+          "f1": 0.07712691336471615
+        },
+        "mean_tile_iou": 0.018468925904679828,
+        "scene_positive_count": 32,
+        "scene_negative_count": 32,
+        "scene_recall": 0.9375,
+        "scene_precision": 0.4838709677419355,
+        "false_positive_scene_rate": 1.0,
+        "positive_scenes_with_any_mask_overlap": 18
+      },
+      "paired_comparison": {
+        "site_clusters": 16,
+        "method": "paired site-cluster bootstrap, 1000 resamples, seed 42; limited geographic/site support",
+        "scene_recall_loss_95pct": [
+          0.0,
+          0.1111111111111111
+        ],
+        "false_positive_rate_change_95pct": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "combined": {
+      "summary": {
+        "count": 64,
+        "evaluated": 64,
+        "failed": 0,
+        "pixels": {
+          "tp": 2305,
+          "fp": 25611,
+          "fn": 27969,
+          "iou": 0.04124541469088306,
+          "f1": 0.07922323423268603
+        },
+        "mean_tile_iou": 0.049115979005894275,
+        "scene_positive_count": 32,
+        "scene_negative_count": 32,
+        "scene_recall": 0.875,
+        "scene_precision": 0.4827586206896552,
+        "false_positive_scene_rate": 0.9375,
+        "positive_scenes_with_any_mask_overlap": 16
+      },
+      "paired_comparison": {
+        "site_clusters": 16,
+        "method": "paired site-cluster bootstrap, 1000 resamples, seed 42; limited geographic/site support",
+        "scene_recall_loss_95pct": [
+          0.0,
+          0.21751207729468588
+        ],
+        "false_positive_rate_change_95pct": [
+          -0.20689655172413793,
+          0.0
+        ]
+      }
+    }
+  },
+  "inputs": [
+    {
+      "id": "57b80d69-bdbe-4513-8388-28f6fd941b43",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 146,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "5f0f243eccb5986a8d78a96d15ed7cde600cdb3470aafee553fcb8d414e1546d",
+      "label_sha256": "7763df2dab2378c0ee2294300ef2507bab2c4414536db8212dc877350386c4d2",
+      "candidate_count": 31,
+      "variants": {
+        "raw": {
+          "tp": 95,
+          "fp": 823,
+          "fn": 1090,
+          "iou": 0.04731075697211155,
+          "f1": 0.0903471231573942,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 82,
+          "fp": 713,
+          "fn": 1103,
+          "iou": 0.04320337197049526,
+          "f1": 0.08282828282828283,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 95,
+          "fp": 663,
+          "fn": 1090,
+          "iou": 0.05140692640692641,
+          "f1": 0.09778692743180649,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 95,
+          "fp": 780,
+          "fn": 1090,
+          "iou": 0.04834605597964377,
+          "f1": 0.09223300970873786,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 82,
+          "fp": 524,
+          "fn": 1103,
+          "iou": 0.04798127559976594,
+          "f1": 0.09156895589056394,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "57b80d69-bdbe-4513-8388-28f6fd941b43",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 146,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "de9effd28c09e1cb0c71604d25a82e60cd0827298bbc946bedb7a05d17d1e4dd",
+      "label_sha256": null,
+      "candidate_count": 31,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 990,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 865,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 843,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 924,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 678,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "00bd30e0-6f33-4573-85db-e48797ebe3dd",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 84,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "9642451f4c235511b468f01042e5555c4ea1d0494bb60002a2c4243958071baa",
+      "label_sha256": "c05180ee4c79c517a4527883980039c2b8d3b34158598a2b80241444a9158fd1",
+      "candidate_count": 15,
+      "variants": {
+        "raw": {
+          "tp": 15,
+          "fp": 380,
+          "fn": 617,
+          "iou": 0.014822134387351778,
+          "f1": 0.029211295034079845,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 350,
+          "fn": 632,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 15,
+          "fp": 353,
+          "fn": 617,
+          "iou": 0.015228426395939087,
+          "f1": 0.03,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 15,
+          "fp": 376,
+          "fn": 617,
+          "iou": 0.01488095238095238,
+          "f1": 0.02932551319648094,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 323,
+          "fn": 632,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "00bd30e0-6f33-4573-85db-e48797ebe3dd",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 84,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "aae0c3249d2122b6bcbda1cab01070015d0ee830f74e0ec6d2a5f80d4653418f",
+      "label_sha256": null,
+      "candidate_count": 17,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 674,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 647,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 645,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 652,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 618,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "c087ee28-77a6-417c-a2e0-30a8d760c458",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 47,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "36998839a683af0b5efb567d038f4fcd827039e882bc831e1f50ab2d7e923a7e",
+      "label_sha256": "f2633e47886bcde3a97610483d32604c3dfec973f10689cb9c266bfc2e87c42b",
+      "candidate_count": 25,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 584,
+          "fn": 522,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 524,
+          "fn": 522,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 562,
+          "fn": 522,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 543,
+          "fn": 522,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 480,
+          "fn": 522,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "c087ee28-77a6-417c-a2e0-30a8d760c458",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 47,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "1fd6ae8989faf7aefbf98a54a9bbedcd2fe30ae3b8ca33e34b351ac93e994b0e",
+      "label_sha256": null,
+      "candidate_count": 24,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 603,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 532,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 573,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 584,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 502,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "e1dc08a1-c345-424c-ab8c-8b0d40da82be",
+      "country": "Turkmenistan",
+      "site": "T_23",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 742,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "2eb058b8b029c127d2487ed0ba569e1c5ba04b471486f85d78fb464baa098d99",
+      "label_sha256": "d4e5cacc8cc724acf59c0700438d786e9d87dd3226152b4425d9374c0c73abeb",
+      "candidate_count": 12,
+      "variants": {
+        "raw": {
+          "tp": 39,
+          "fp": 205,
+          "fn": 377,
+          "iou": 0.06280193236714976,
+          "f1": 0.11818181818181818,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 39,
+          "fp": 159,
+          "fn": 377,
+          "iou": 0.06782608695652174,
+          "f1": 0.1270358306188925,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 39,
+          "fp": 205,
+          "fn": 377,
+          "iou": 0.06280193236714976,
+          "f1": 0.11818181818181818,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 39,
+          "fp": 175,
+          "fn": 377,
+          "iou": 0.06598984771573604,
+          "f1": 0.12380952380952381,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 39,
+          "fp": 159,
+          "fn": 377,
+          "iou": 0.06782608695652174,
+          "f1": 0.1270358306188925,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "e1dc08a1-c345-424c-ab8c-8b0d40da82be",
+      "country": "Turkmenistan",
+      "site": "T_23",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 742,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "b968c2c45022912142f1a122131b0a50808c803748abd5288bb1cd8bbd79f8a2",
+      "label_sha256": null,
+      "candidate_count": 11,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 183,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 126,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 183,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 178,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 126,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "643ee2b0-3a87-42a5-854b-142993e6ea58",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 44,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "a492f20056596bc03180c2c9c8f6c6779bfa89706b0b2d51a94f3bf85b181e09",
+      "label_sha256": "81589fc189096f1e1b34773ec866b99fcb96d0b2042885ef31e412675eae76be",
+      "candidate_count": 25,
+      "variants": {
+        "raw": {
+          "tp": 2,
+          "fp": 566,
+          "fn": 368,
+          "iou": 0.002136752136752137,
+          "f1": 0.0042643923240938165,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 470,
+          "fn": 370,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 2,
+          "fp": 533,
+          "fn": 368,
+          "iou": 0.0022148394241417496,
+          "f1": 0.004419889502762431,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 548,
+          "fn": 370,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 445,
+          "fn": 370,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "643ee2b0-3a87-42a5-854b-142993e6ea58",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 44,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "a06c4e8cc49ea422fae046d8e87daa6752592edd979249ff727100f441664d24",
+      "label_sha256": null,
+      "candidate_count": 21,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 482,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 404,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 444,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 481,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 366,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "73a9f9c5-d3df-40de-9968-38a319cdce17",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 75,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "ccf83d856b459e4e06ab3cd015255f233e0af108e76b7c1594650f0338b37415",
+      "label_sha256": "0bdb707d2d81c137d1babef90727bfb5113272735b729c026032fe43a814d6cb",
+      "candidate_count": 16,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 425,
+          "fn": 317,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 375,
+          "fn": 317,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 425,
+          "fn": 317,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 404,
+          "fn": 317,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 375,
+          "fn": 317,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "73a9f9c5-d3df-40de-9968-38a319cdce17",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 75,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "3c1e61dff0885d1735c842fa32561223215549ec231371c859aa086f188ee70a",
+      "label_sha256": null,
+      "candidate_count": 21,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 493,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 438,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 493,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 475,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 438,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "95184224-06b9-425d-a960-f90a528ca535",
+      "country": "Turkmenistan",
+      "site": "T_26",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 864,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "5996f27e6bb804cc2c4817452ba9a7678048487a2648d36f0a29239a8eecf8da",
+      "label_sha256": "8a64318c24298ae9bc8661b8f8dfbc3efadbb8dda0b4923ea0b3335d683b3a43",
+      "candidate_count": 4,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 80,
+          "fn": 1931,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 52,
+          "fn": 1931,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 23,
+          "fn": 1931,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 60,
+          "fn": 1931,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1931,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        }
+      }
+    },
+    {
+      "id": "95184224-06b9-425d-a960-f90a528ca535",
+      "country": "Turkmenistan",
+      "site": "T_26",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 864,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "06e000f3ef0834d04483785fd0a94104e5cab907b381786d354ca51ab32e25fd",
+      "label_sha256": null,
+      "candidate_count": 4,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 104,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 93,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 104,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "iou": 1.0,
+          "f1": 1.0,
+          "detected": 0
+        }
+      }
+    },
+    {
+      "id": "3e3a80aa-9acb-4b0f-aed8-43fe1503fecb",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 159,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "b6609290ee631609cd4570dca077c6a98e437b4c5825d62576a4f1aef4fb1c07",
+      "label_sha256": "efacc521185247cc4fc694c72c068716266f2269d1dd7f995006b0ce22c0e685",
+      "candidate_count": 20,
+      "variants": {
+        "raw": {
+          "tp": 81,
+          "fp": 332,
+          "fn": 741,
+          "iou": 0.07019064124783363,
+          "f1": 0.1311740890688259,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 65,
+          "fp": 297,
+          "fn": 757,
+          "iou": 0.0580875781948168,
+          "f1": 0.1097972972972973,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 81,
+          "fp": 332,
+          "fn": 741,
+          "iou": 0.07019064124783363,
+          "f1": 0.1311740890688259,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 80,
+          "fp": 311,
+          "fn": 742,
+          "iou": 0.0706090026478376,
+          "f1": 0.13190436933223412,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 65,
+          "fp": 297,
+          "fn": 757,
+          "iou": 0.0580875781948168,
+          "f1": 0.1097972972972973,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "3e3a80aa-9acb-4b0f-aed8-43fe1503fecb",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 159,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "ca9df5875e254d012ba23da61217f632b4947e2b6f19d0e1c13f5510d7a70fea",
+      "label_sha256": null,
+      "candidate_count": 18,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 412,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 339,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 412,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 403,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 339,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "ec0f346b-9442-44c1-aed1-ed5cdb677b04",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 143,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "0468496decd7ce27c015fb774aaddb917056767c4cbb08bb57cc8891900f31eb",
+      "label_sha256": "3a7c8c5d51003415d265e8e63dda7596661e3108f1427aa58e86d6a890ec0d54",
+      "candidate_count": 25,
+      "variants": {
+        "raw": {
+          "tp": 11,
+          "fp": 952,
+          "fn": 312,
+          "iou": 0.008627450980392156,
+          "f1": 0.017107309486780714,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 9,
+          "fp": 906,
+          "fn": 314,
+          "iou": 0.007323026851098454,
+          "f1": 0.014539579967689823,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 11,
+          "fp": 785,
+          "fn": 312,
+          "iou": 0.009927797833935019,
+          "f1": 0.01966041108132261,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 9,
+          "fp": 945,
+          "fn": 314,
+          "iou": 0.007097791798107256,
+          "f1": 0.014095536413469069,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 9,
+          "fp": 753,
+          "fn": 314,
+          "iou": 0.008364312267657992,
+          "f1": 0.016589861751152075,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "ec0f346b-9442-44c1-aed1-ed5cdb677b04",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 143,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "b606efb550da7ec6366d565c6953596264238bf22d62696496475c2c9a19ef4e",
+      "label_sha256": null,
+      "candidate_count": 25,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 900,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 862,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 872,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 887,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 835,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "e3ca897a-801c-46d1-a724-b87ea6b84663",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 83,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "0b8200c2b229f07dc1ea46f5e80264fce7dd14d6b5f272ebaad10ca59dda5f76",
+      "label_sha256": "d3a8481b8f547680a49a848a146cbfa297d206f785eada1ee72a8ebee4999ee4",
+      "candidate_count": 14,
+      "variants": {
+        "raw": {
+          "tp": 52,
+          "fp": 446,
+          "fn": 423,
+          "iou": 0.05646036916395222,
+          "f1": 0.10688591983556012,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 52,
+          "fp": 429,
+          "fn": 423,
+          "iou": 0.05752212389380531,
+          "f1": 0.1087866108786611,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 52,
+          "fp": 417,
+          "fn": 423,
+          "iou": 0.05829596412556054,
+          "f1": 0.11016949152542373,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 52,
+          "fp": 444,
+          "fn": 423,
+          "iou": 0.056583242655059846,
+          "f1": 0.10710607621009269,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 52,
+          "fp": 400,
+          "fn": 423,
+          "iou": 0.05942857142857143,
+          "f1": 0.1121898597626753,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "e3ca897a-801c-46d1-a724-b87ea6b84663",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 83,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "13206a25069856c764628904e83d83517012847eda08f8625068cbec08e56b99",
+      "label_sha256": null,
+      "candidate_count": 17,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 468,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 452,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 442,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 460,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 426,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "f2ff4a41-fc8b-4029-9e8e-a1c7104ac667",
+      "country": "Turkmenistan",
+      "site": "T_27",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 902,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "c2c4444fb62e1eb5cfb919f921ddeafaacb59d35a73f7f20c8658ebba332fb8d",
+      "label_sha256": "8a211297b3f0642597da7b3c53f2d35e6317dd74ac859183139dbcbf0daafec3",
+      "candidate_count": 1,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        }
+      }
+    },
+    {
+      "id": "f2ff4a41-fc8b-4029-9e8e-a1c7104ac667",
+      "country": "Turkmenistan",
+      "site": "T_27",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 902,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "fcd0b83d7f1211933b4bf8b17a60d4fde9c4d09932eb7ee2387e5791960b7e1f",
+      "label_sha256": null,
+      "candidate_count": 1,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 46,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 46,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 46,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 46,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 46,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "8472feed-85b9-45bd-bcf2-5b93af4ab9f7",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 144,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "dca143be652805de2bb0082f30296f9bcaf053e413dd351345b56a9f6ba29fbd",
+      "label_sha256": "0a943779c692f0d0aac9ddd857b6398523f6394860f842ad10f63b45776dafad",
+      "candidate_count": 16,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 297,
+          "fn": 511,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 253,
+          "fn": 511,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 297,
+          "fn": 511,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 295,
+          "fn": 511,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 253,
+          "fn": 511,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "8472feed-85b9-45bd-bcf2-5b93af4ab9f7",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 144,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "ada2a30cf2692572c62f7b02e0624c3a7c8ce73cf193840692b421fa66f0c214",
+      "label_sha256": null,
+      "candidate_count": 17,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 289,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 230,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 255,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 254,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 196,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "d63be4fd-d200-4c39-a111-db0abf6b77f0",
+      "country": "Libya",
+      "site": "L_15",
+      "source_file": "methaneset-s2-finetune_Libya.tacozip",
+      "parent_index": 64,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "b3382826dc1c139c44ec4bf7e10c7809a5b48d01d88f82820db7c43a4169b7d6",
+      "label_sha256": "6b8b18aaf1740b6b29de860a4dd5fbab22e7572d685e2137aab907f957606ee2",
+      "candidate_count": 18,
+      "variants": {
+        "raw": {
+          "tp": 293,
+          "fp": 392,
+          "fn": 1306,
+          "iou": 0.14716223003515821,
+          "f1": 0.2565674255691769,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 287,
+          "fp": 336,
+          "fn": 1312,
+          "iou": 0.1483204134366925,
+          "f1": 0.2583258325832583,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 293,
+          "fp": 392,
+          "fn": 1306,
+          "iou": 0.14716223003515821,
+          "f1": 0.2565674255691769,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 287,
+          "fp": 390,
+          "fn": 1312,
+          "iou": 0.14429361488185016,
+          "f1": 0.2521968365553603,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 287,
+          "fp": 336,
+          "fn": 1312,
+          "iou": 0.1483204134366925,
+          "f1": 0.2583258325832583,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "d63be4fd-d200-4c39-a111-db0abf6b77f0",
+      "country": "Libya",
+      "site": "L_15",
+      "source_file": "methaneset-s2-finetune_Libya.tacozip",
+      "parent_index": 64,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "ff033e8e743c2a4a57bf095ffe7f0ad5a9dae7e0f3c87b599c5bd44cbb550cf2",
+      "label_sha256": null,
+      "candidate_count": 16,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 398,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 355,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 398,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 392,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 355,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "2cc6b94c-3d2b-4649-bac5-fef5b0681651",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 158,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "38f223c2a711db1c2fac1166b10064a719d22e59fdfd7512533a2d2c29526aea",
+      "label_sha256": "b25639060743c2f6dd35ebaa522e7578dd4c4d69cf3db2c39d4bb286c8ef652b",
+      "candidate_count": 20,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 343,
+          "fn": 349,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 256,
+          "fn": 349,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 331,
+          "fn": 349,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 325,
+          "fn": 349,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 256,
+          "fn": 349,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "2cc6b94c-3d2b-4649-bac5-fef5b0681651",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 158,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "3883e70e32dc3167083c85f887debb337e153709c0e818ffba8e03a8c20eb521",
+      "label_sha256": null,
+      "candidate_count": 19,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 337,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 283,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 337,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 319,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 283,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "a05826d9-bd7a-44a3-868c-5aef504b660f",
+      "country": "Algeria",
+      "site": "A_16",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 117,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "64aa2ed6f9ff08eb683026dff7b11eddadc31be0541cc2ce31e7dadd60adb3ae",
+      "label_sha256": "456e6163c6c0f050a41abea3adf06121b614ef60d3a841b5cfd461447d36f875",
+      "candidate_count": 6,
+      "variants": {
+        "raw": {
+          "tp": 25,
+          "fp": 126,
+          "fn": 703,
+          "iou": 0.02927400468384075,
+          "f1": 0.05688282138794084,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 23,
+          "fp": 121,
+          "fn": 705,
+          "iou": 0.027090694935217905,
+          "f1": 0.052752293577981654,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 25,
+          "fp": 126,
+          "fn": 703,
+          "iou": 0.02927400468384075,
+          "f1": 0.05688282138794084,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 25,
+          "fp": 121,
+          "fn": 703,
+          "iou": 0.02944640753828033,
+          "f1": 0.057208237986270026,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 23,
+          "fp": 121,
+          "fn": 705,
+          "iou": 0.027090694935217905,
+          "f1": 0.052752293577981654,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "a05826d9-bd7a-44a3-868c-5aef504b660f",
+      "country": "Algeria",
+      "site": "A_16",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 117,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "29e55f646c9189917fe8ad6b572c321cad335f951c3fce295adfb0b1615c4944",
+      "label_sha256": null,
+      "candidate_count": 5,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 142,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 132,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 142,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 132,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 132,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "1ab95f5d-4de9-43dc-862a-46d521c42831",
+      "country": "Turkmenistan",
+      "site": "T_25",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 808,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "1fc43434ed2f55a3b35b0864e23a6e9884814c9f8a4ca0e1a8f1f8ab6e3a88dc",
+      "label_sha256": "49389bf600754beb5d221ab4da55b20ab137d8433fe87b87248a4496c2fba0cf",
+      "candidate_count": 6,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 77,
+          "fn": 806,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 49,
+          "fn": 806,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 77,
+          "fn": 806,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 77,
+          "fn": 806,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 49,
+          "fn": 806,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "1ab95f5d-4de9-43dc-862a-46d521c42831",
+      "country": "Turkmenistan",
+      "site": "T_25",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 808,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "4f63cbe83c314db61cc134c0ca6eb0f3bded48b41074c57c68b928f017f302ea",
+      "label_sha256": null,
+      "candidate_count": 4,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 93,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 91,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 93,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 93,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 91,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "2b1e968c-4eea-42dd-9d7c-f9973d5d7741",
+      "country": "Kazakhstan",
+      "site": "K_3",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 29,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "02694149a330c3a85e959e89abf278163d10e7a8830ba599d4a1a4a76acd6f4d",
+      "label_sha256": "41048b4a3affa4e3cd56a55070398692257737568741b89cf7723bb4770aa7b2",
+      "candidate_count": 7,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 66,
+          "fn": 520,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 520,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 66,
+          "fn": 520,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 61,
+          "fn": 520,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 520,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        }
+      }
+    },
+    {
+      "id": "2b1e968c-4eea-42dd-9d7c-f9973d5d7741",
+      "country": "Kazakhstan",
+      "site": "K_3",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 29,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "470668ccc4af7971febc84a02ed67a012a9e70fddc64aa76f8f82656420dda90",
+      "label_sha256": null,
+      "candidate_count": 30,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 983,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 872,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 983,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 966,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 872,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "f5d5c2e5-b658-470d-8879-4944cccf8b81",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 140,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "d3b81e97bd4d2946882693a015ab9f686368255b5863a593d65260a0e1a6550f",
+      "label_sha256": "c6124b610f72414b8b265ea168996e94848a0fc51ff27230cf19dbb4daae8c48",
+      "candidate_count": 29,
+      "variants": {
+        "raw": {
+          "tp": 10,
+          "fp": 459,
+          "fn": 537,
+          "iou": 0.009940357852882704,
+          "f1": 0.01968503937007874,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 382,
+          "fn": 547,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 10,
+          "fp": 459,
+          "fn": 537,
+          "iou": 0.009940357852882704,
+          "f1": 0.01968503937007874,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 10,
+          "fp": 424,
+          "fn": 537,
+          "iou": 0.010298661174047374,
+          "f1": 0.020387359836901122,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 382,
+          "fn": 547,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "f5d5c2e5-b658-470d-8879-4944cccf8b81",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 140,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "4ef3bbe7ed30d1906887823713de1d7589323df9e3f28a4d09d6f8246aa51ddd",
+      "label_sha256": null,
+      "candidate_count": 27,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 516,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 426,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 516,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 510,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 426,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "9d7ed1a8-2ae1-4d6f-bac7-4b3c7a31ff94",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 145,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "94306d54b46d3412e4fab4049f222553ca7da29de352ceaada3c2ee694219932",
+      "label_sha256": "d18047def8484e0af9558b4ce74e42552992258652e04efca1cabf23fc17115c",
+      "candidate_count": 17,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 337,
+          "fn": 414,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 260,
+          "fn": 414,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 337,
+          "fn": 414,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 314,
+          "fn": 414,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 260,
+          "fn": 414,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "9d7ed1a8-2ae1-4d6f-bac7-4b3c7a31ff94",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 145,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "83827abc3474529defaa7130b7896bc17464914eadb37a5408ea4468a6dfc216",
+      "label_sha256": null,
+      "candidate_count": 19,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 301,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 228,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 301,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 288,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 228,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "6f111a46-e583-40fa-871b-49ef5efcfd96",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 50,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "614758d5d584e9a921e6cd76817234c89fa8e47c940cebe0bd03e77d1c37da9c",
+      "label_sha256": "6753c3971bc266f85e6befe3335ef4e58d3a4aa5f9e64225d176f425d4fc1357",
+      "candidate_count": 31,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 684,
+          "fn": 493,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 571,
+          "fn": 493,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 662,
+          "fn": 493,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 656,
+          "fn": 493,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 549,
+          "fn": 493,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "6f111a46-e583-40fa-871b-49ef5efcfd96",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 50,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "21179c51925b4a9476f0d70905fea70c870837b50f669f49f5216bd92ca7f987",
+      "label_sha256": null,
+      "candidate_count": 30,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 562,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 480,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 553,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 485,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 439,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "e1275c53-b326-499f-b2fd-436290fcb0c6",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 149,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "c0bee3cb71ed3a9d9dc3de9265368be98e242ca0453ecbe71122c0c52ee523dc",
+      "label_sha256": "358bfb4a40ff8aca0b6006550d109e4c4df539acea3c3620f70e97d1348d3b7b",
+      "candidate_count": 18,
+      "variants": {
+        "raw": {
+          "tp": 103,
+          "fp": 643,
+          "fn": 1811,
+          "iou": 0.040281579976535004,
+          "f1": 0.0774436090225564,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 103,
+          "fp": 594,
+          "fn": 1811,
+          "iou": 0.041068580542264754,
+          "f1": 0.07889697433933358,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 103,
+          "fp": 541,
+          "fn": 1811,
+          "iou": 0.04195519348268839,
+          "f1": 0.08053166536356529,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 103,
+          "fp": 635,
+          "fn": 1811,
+          "iou": 0.04040800313848568,
+          "f1": 0.07767722473604827,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 103,
+          "fp": 495,
+          "fn": 1811,
+          "iou": 0.042756330427563306,
+          "f1": 0.08200636942675159,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "e1275c53-b326-499f-b2fd-436290fcb0c6",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 149,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "f6aa8a5a0b75f548cf83969b5d281fd31c05459de6697a99b4cde516e5bb0d4b",
+      "label_sha256": null,
+      "candidate_count": 19,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 711,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 677,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 607,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 705,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 577,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "c8d9c133-f7ff-40af-85ee-860ce53a7d09",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 509,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "fdd8ba3a2518fd5979e65a15886625dfa2a012d72800ffa011d18ae845b57113",
+      "label_sha256": "0e12234e7d98599f9c3493581b08bce0edb3133288ce2c5e65b8d84ff7673509",
+      "candidate_count": 64,
+      "variants": {
+        "raw": {
+          "tp": 117,
+          "fp": 1480,
+          "fn": 1916,
+          "iou": 0.033304867634500426,
+          "f1": 0.06446280991735537,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 103,
+          "fp": 1300,
+          "fn": 1930,
+          "iou": 0.030903090309030903,
+          "f1": 0.059953434225844,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 56,
+          "fp": 1280,
+          "fn": 1977,
+          "iou": 0.016903108964684575,
+          "f1": 0.03324428613831998,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 111,
+          "fp": 1415,
+          "fn": 1922,
+          "iou": 0.03219257540603248,
+          "f1": 0.062377072211295306,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 42,
+          "fp": 1074,
+          "fn": 1991,
+          "iou": 0.013517862890247827,
+          "f1": 0.02667513496348047,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "c8d9c133-f7ff-40af-85ee-860ce53a7d09",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 509,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "ec8758470069c970171be237ae4df0020233589d65d35ae07d615fd4d1a8199c",
+      "label_sha256": null,
+      "candidate_count": 55,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 1180,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 987,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 917,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 1124,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 745,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "85b67125-a302-46da-a8d4-07e75f70b443",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 504,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "5fd0a7a8f627ad91c6143beea27f72a87c91365a19c2b9df5be9378f2d12cb66",
+      "label_sha256": "bbbe16953239ef4a367dc96bda68e7a0699b5979023201826cec0c2c20d5c0e3",
+      "candidate_count": 37,
+      "variants": {
+        "raw": {
+          "tp": 140,
+          "fp": 767,
+          "fn": 1320,
+          "iou": 0.06286484059272564,
+          "f1": 0.11829319814110689,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 128,
+          "fp": 631,
+          "fn": 1332,
+          "iou": 0.06121472979435677,
+          "f1": 0.11536728255971158,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 140,
+          "fp": 729,
+          "fn": 1320,
+          "iou": 0.06395614435815442,
+          "f1": 0.12022327179046802,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 140,
+          "fp": 747,
+          "fn": 1320,
+          "iou": 0.06343452650657,
+          "f1": 0.11930123561994035,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 128,
+          "fp": 593,
+          "fn": 1332,
+          "iou": 0.062347783731125185,
+          "f1": 0.11737734983952315,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "85b67125-a302-46da-a8d4-07e75f70b443",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 504,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "8a6f79454cab48700324599eb6117c92bd4a7766139da5d75e4e7ca83cbe0c4d",
+      "label_sha256": null,
+      "candidate_count": 27,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 917,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 834,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 907,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 900,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 834,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "299a07ee-5eb8-4001-b26a-8ed0b8d4c99f",
+      "country": "Turkmenistan",
+      "site": "T_10",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 248,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "0fab02b08b240d5fa9ce0bf17c8b2a5b9eccb7a9085449f55cea0ecf39bf8729",
+      "label_sha256": "e0171b52c37ed92772c7b75c4249d1a233cbd8a4f6cfb4f55064a11e1f0a3e35",
+      "candidate_count": 12,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 258,
+          "fn": 531,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 242,
+          "fn": 531,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 258,
+          "fn": 531,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 253,
+          "fn": 531,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 242,
+          "fn": 531,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "299a07ee-5eb8-4001-b26a-8ed0b8d4c99f",
+      "country": "Turkmenistan",
+      "site": "T_10",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 248,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "5142d6a886cd25c1d7a78a1274b76f2c6b37020364374f3c63dbd6a877af2ed5",
+      "label_sha256": null,
+      "candidate_count": 16,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 318,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 277,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 318,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 316,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 277,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "3cd68abd-1c02-4e47-be2b-a790ccb66693",
+      "country": "Libya",
+      "site": "L_14",
+      "source_file": "methaneset-s2-finetune_Libya.tacozip",
+      "parent_index": 56,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "4371a17273a12bd4676b1c2827daacddf5defcbac5d89da43e9032c9b774e029",
+      "label_sha256": "214f9c283fd0788b2976f44cf1b3b35dc03f5a78250ff24df7ddc2c69cdbf17b",
+      "candidate_count": 23,
+      "variants": {
+        "raw": {
+          "tp": 487,
+          "fp": 287,
+          "fn": 2318,
+          "iou": 0.157503234152652,
+          "f1": 0.27214305671975414,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 481,
+          "fp": 223,
+          "fn": 2324,
+          "iou": 0.15885072655217966,
+          "f1": 0.27415218010829295,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 487,
+          "fp": 222,
+          "fn": 2318,
+          "iou": 0.1608853650479022,
+          "f1": 0.2771770062606716,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 484,
+          "fp": 261,
+          "fn": 2321,
+          "iou": 0.1578604044357469,
+          "f1": 0.27267605633802816,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 481,
+          "fp": 153,
+          "fn": 2324,
+          "iou": 0.16260987153482082,
+          "f1": 0.2797324803722012,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "3cd68abd-1c02-4e47-be2b-a790ccb66693",
+      "country": "Libya",
+      "site": "L_14",
+      "source_file": "methaneset-s2-finetune_Libya.tacozip",
+      "parent_index": 56,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "a766c15a327b5a1fd9a026a5c40df2366852fc7b07b17d8e59a060f7e691af7a",
+      "label_sha256": null,
+      "candidate_count": 18,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 333,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 257,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 279,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 328,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 203,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "66a4d210-c140-46bd-bb87-543d1abfc02d",
+      "country": "Turkmenistan",
+      "site": "T_22",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 634,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "d4bf3b4e51f7944b5a44955c35a48631af5f31d6b88e68121da3b0ca412f8b41",
+      "label_sha256": "fee590283a1baa3d3232672516e93ec3d117290fc7227e2f7a94c172615b5821",
+      "candidate_count": 39,
+      "variants": {
+        "raw": {
+          "tp": 268,
+          "fp": 901,
+          "fn": 1324,
+          "iou": 0.10750100280786201,
+          "f1": 0.1941325606664252,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 251,
+          "fp": 802,
+          "fn": 1341,
+          "iou": 0.1048454469507101,
+          "f1": 0.1897920604914934,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 268,
+          "fp": 884,
+          "fn": 1324,
+          "iou": 0.10823909531502424,
+          "f1": 0.19533527696793002,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 264,
+          "fp": 883,
+          "fn": 1328,
+          "iou": 0.10666666666666667,
+          "f1": 0.1927710843373494,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 251,
+          "fp": 785,
+          "fn": 1341,
+          "iou": 0.1055952881783761,
+          "f1": 0.19101978691019786,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "66a4d210-c140-46bd-bb87-543d1abfc02d",
+      "country": "Turkmenistan",
+      "site": "T_22",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 634,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "01ab4df41e556931fd1c579c1dd0b6610c9d4e6f3bad029e407a056201d9fccb",
+      "label_sha256": null,
+      "candidate_count": 43,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 1039,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 892,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 1007,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 1011,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 862,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "b77027e6-4c56-49e9-ad91-17253754759b",
+      "country": "Turkmenistan",
+      "site": "T_26",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 869,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "ba12b4d9733d4fe89f91e979be49913d587f185a1ebef1a7333406ea07783222",
+      "label_sha256": "7e7b98e726af109b94be6e0c72624b9c735bbb45da28b17f8fdefe1a8f73bf1b",
+      "candidate_count": 0,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 355,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 0
+        }
+      }
+    },
+    {
+      "id": "b77027e6-4c56-49e9-ad91-17253754759b",
+      "country": "Turkmenistan",
+      "site": "T_26",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 869,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "61e179432848a81c24e6217641aff21a072672be8f5b0d4c7941a9cb089d02be",
+      "label_sha256": null,
+      "candidate_count": 1,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 12,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "iou": 1.0,
+          "f1": 1.0,
+          "detected": 0
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 12,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 12,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "iou": 1.0,
+          "f1": 1.0,
+          "detected": 0
+        }
+      }
+    },
+    {
+      "id": "a83bb7d9-d2ee-4f6a-9a90-ff8e60ef335e",
+      "country": "Turkmenistan",
+      "site": "T_10",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 253,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "211c767ca3dcf11d0f838f78bcc97e8d1c97802741a9f2df6056b2a44ef1e786",
+      "label_sha256": "4dd347209a27b858d02a6bdd7a569dc4f28fc607b10804e7f2bbd9776c81f55c",
+      "candidate_count": 17,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 453,
+          "fn": 841,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 383,
+          "fn": 841,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 453,
+          "fn": 841,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 442,
+          "fn": 841,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 383,
+          "fn": 841,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "a83bb7d9-d2ee-4f6a-9a90-ff8e60ef335e",
+      "country": "Turkmenistan",
+      "site": "T_10",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 253,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "2e37ebcec2ba399d3a8191b092cb49d7727b3d21565c55008326d378d92428d9",
+      "label_sha256": null,
+      "candidate_count": 18,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 463,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 417,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 463,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 449,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 417,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "18dec111-7383-4e1f-b233-4522c9571a0c",
+      "country": "Kazakhstan",
+      "site": "K_S_2",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 270,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "aae22d1dbdc012c0e8cffd1d1b690b9dba593d20de2b533a50ab141881705f5d",
+      "label_sha256": "9bb3b45353a7f8455c3e687c63e244f497ce3371e8db09a2a36f6548782313ea",
+      "candidate_count": 16,
+      "variants": {
+        "raw": {
+          "tp": 508,
+          "fp": 212,
+          "fn": 2001,
+          "iou": 0.18669606762219773,
+          "f1": 0.3146484979869929,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 508,
+          "fp": 144,
+          "fn": 2001,
+          "iou": 0.19148134187712024,
+          "f1": 0.3214172730148687,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 508,
+          "fp": 212,
+          "fn": 2001,
+          "iou": 0.18669606762219773,
+          "f1": 0.3146484979869929,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 508,
+          "fp": 209,
+          "fn": 2001,
+          "iou": 0.18690213392200147,
+          "f1": 0.31494110353378796,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 508,
+          "fp": 144,
+          "fn": 2001,
+          "iou": 0.19148134187712024,
+          "f1": 0.3214172730148687,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "18dec111-7383-4e1f-b233-4522c9571a0c",
+      "country": "Kazakhstan",
+      "site": "K_S_2",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 270,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "299f530657eb74736d7adba184a8d4165cd02f20f00f459a65706f9f1819761a",
+      "label_sha256": null,
+      "candidate_count": 14,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 323,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 268,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 323,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 316,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 268,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "90141a35-ca69-4c0b-b925-973ef04caa27",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 505,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "fb223d70476421ee8f6d077d0146b9b76973a3bc43fab4bb400f8aa57ad6f2f4",
+      "label_sha256": "8020296d5d7d894463e9eb4582b32eda9e7d96589dc24300bf1dc88c1cdb70be",
+      "candidate_count": 13,
+      "variants": {
+        "raw": {
+          "tp": 37,
+          "fp": 95,
+          "fn": 861,
+          "iou": 0.03726082578046324,
+          "f1": 0.07184466019417475,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 24,
+          "fp": 54,
+          "fn": 874,
+          "iou": 0.025210084033613446,
+          "f1": 0.04918032786885246,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 37,
+          "fp": 95,
+          "fn": 861,
+          "iou": 0.03726082578046324,
+          "f1": 0.07184466019417475,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 37,
+          "fp": 86,
+          "fn": 861,
+          "iou": 0.037601626016260166,
+          "f1": 0.07247796278158668,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 24,
+          "fp": 54,
+          "fn": 874,
+          "iou": 0.025210084033613446,
+          "f1": 0.04918032786885246,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "90141a35-ca69-4c0b-b925-973ef04caa27",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 505,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "5fd0a7a8f627ad91c6143beea27f72a87c91365a19c2b9df5be9378f2d12cb66",
+      "label_sha256": null,
+      "candidate_count": 37,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 907,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 759,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 869,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 887,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 721,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "097038e5-df6c-4538-bbb7-5eb3537ac2c7",
+      "country": "Turkmenistan",
+      "site": "T_22",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 633,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "bd3820c81f365fabfba4460701f4b272ddc6979b0f517f238295286bc06484af",
+      "label_sha256": "203bc044d75467dcb0a567c89f50331ac15d8ff856619e0b62a3beab502864ae",
+      "candidate_count": 44,
+      "variants": {
+        "raw": {
+          "tp": 138,
+          "fp": 992,
+          "fn": 804,
+          "iou": 0.07135470527404343,
+          "f1": 0.13320463320463322,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 138,
+          "fp": 871,
+          "fn": 804,
+          "iou": 0.07611693325979041,
+          "f1": 0.14146591491542798,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 138,
+          "fp": 937,
+          "fn": 804,
+          "iou": 0.07344332091538053,
+          "f1": 0.1368368864650471,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 138,
+          "fp": 966,
+          "fn": 804,
+          "iou": 0.07232704402515723,
+          "f1": 0.1348973607038123,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 138,
+          "fp": 820,
+          "fn": 804,
+          "iou": 0.07832009080590238,
+          "f1": 0.14526315789473684,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "097038e5-df6c-4538-bbb7-5eb3537ac2c7",
+      "country": "Turkmenistan",
+      "site": "T_22",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 633,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "b7f700d2d952d621caa29307bee84520cec627d77da5acfb03701de36b4e8545",
+      "label_sha256": null,
+      "candidate_count": 52,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 1243,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 1045,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 1172,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 1211,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 990,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "273a5f5f-879b-43de-a0cf-61fa434ca1b5",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 517,
+      "split": "validation",
+      "kind": "target",
+      "label_positive": true,
+      "input_sha256": "f5940548a00733d1e226296008fe7728eeaae81be3b9639f8ac6ad59dc0b90a5",
+      "label_sha256": "3d2a0be4aedbf7fe394d20020ce7ddd45cb0c15acb051d17ef7fe60e43de7b21",
+      "candidate_count": 55,
+      "variants": {
+        "raw": {
+          "tp": 83,
+          "fp": 1015,
+          "fn": 996,
+          "iou": 0.039637058261700095,
+          "f1": 0.07625172255397336,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 73,
+          "fp": 768,
+          "fn": 1006,
+          "iou": 0.03952355170546833,
+          "f1": 0.07604166666666666,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 83,
+          "fp": 809,
+          "fn": 996,
+          "iou": 0.04396186440677966,
+          "f1": 0.08422120750887874,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 77,
+          "fp": 998,
+          "fn": 1002,
+          "iou": 0.03707270101107366,
+          "f1": 0.07149489322191271,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 73,
+          "fp": 562,
+          "fn": 1006,
+          "iou": 0.044485070079219986,
+          "f1": 0.08518086347724621,
+          "detected": 1
+        }
+      }
+    },
+    {
+      "id": "273a5f5f-879b-43de-a0cf-61fa434ca1b5",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 517,
+      "split": "validation",
+      "kind": "bg0",
+      "label_positive": false,
+      "input_sha256": "625d5ba8e07b7b1b64e7b663d543a9c0c13c1327d6ca82cf04db3c55ede91415",
+      "label_sha256": null,
+      "candidate_count": 56,
+      "variants": {
+        "raw": {
+          "tp": 0,
+          "fp": 1414,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "small_area": {
+          "tp": 0,
+          "fp": 1240,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "edge_contact": {
+          "tp": 0,
+          "fp": 1245,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "threshold_sensitive": {
+          "tp": 0,
+          "fp": 1370,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        },
+        "combined": {
+          "tp": 0,
+          "fp": 1054,
+          "fn": 0,
+          "iou": 0.0,
+          "f1": 0.0,
+          "detected": 1
+        }
+      }
+    }
+  ]
+}

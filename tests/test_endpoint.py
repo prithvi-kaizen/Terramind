@@ -79,3 +79,11 @@ def test_corrupt_raster_returns_422(client, monkeypatch):
     monkeypatch.setattr(endpoint, "run_inference", stub)
     response = client.post("/predict", data={"file": (io.BytesIO(b"bad"), "tile.tiff")})
     assert response.status_code == 422
+
+
+@pytest.mark.parametrize('extra',[{'min_area_m2':'nan'},{'min_area_m2':'-1'},{'filter_flags':'unknown'}])
+def test_invalid_review_configuration_rejected_before_inference(client,monkeypatch,extra):
+    def unexpected(**kwargs):pytest.fail('Invalid review configuration must not start inference')
+    monkeypatch.setattr(endpoint,'run_inference',unexpected)
+    response=client.post('/predict',data={'file':(io.BytesIO(b'tile'),'tile.tiff'),**extra})
+    assert response.status_code==400

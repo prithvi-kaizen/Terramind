@@ -19,6 +19,7 @@ def main():
         "docs/SETUP.md", "docs/DATA.md", "docs/MODEL_CARD.md",
         "docs/IMPLEMENTATION_PLAN.md", "docs/PROVENANCE.md", "docs/VALIDATION.md",
         ".github/workflows/ci.yml", "docs/artifact_manifest.json",
+        "docs/PHASE_2.md", "docs/alert-schema-2.0.json", "docs/model_configuration.json",
     ]
     for name in required:
         if not (ROOT / name).is_file():

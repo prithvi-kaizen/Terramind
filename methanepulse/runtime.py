@@ -12,6 +12,7 @@ import torch
 from .model import TerraMindMethanePulse
 from .preprocessing import load_and_preprocess, PREPROCESSING_VERSION
 from .artifacts import write_artifacts
+from .candidates import CandidateConfig
 
 ARCHITECTURE_VERSION = "terramind-small-swir-heads-v1"
 _LOCK = threading.RLock()
@@ -110,7 +111,9 @@ def predict_tile(tiff_path, checkpoint_path, threshold=0.5, device=None):
         return _predict(tiff_path, checkpoint_path, threshold, torch.device(device) if device else get_device())
 
 
-def run_inference(tiff_path, checkpoint_path, output_dir, confidence_threshold=0.5, device=None):
+def run_inference(tiff_path, checkpoint_path, output_dir, confidence_threshold=0.5, device=None, candidate_config=None):
+    if candidate_config is not None and not isinstance(candidate_config,CandidateConfig):
+        raise ValueError('candidate_config must be a CandidateConfig instance')
     with _LOCK:
         prediction = _predict(tiff_path, checkpoint_path, confidence_threshold,
                               torch.device(device) if device else get_device())
@@ -118,4 +121,4 @@ def run_inference(tiff_path, checkpoint_path, output_dir, confidence_threshold=0
             prediction.probability, prediction.mask, prediction.severity_class,
             prediction.severity_confidence, *prediction.metadata, prediction.model, identity={"checkpoint_sha256": _cached_key[0],
                 "architecture_version": ARCHITECTURE_VERSION, "preprocessing_version": PREPROCESSING_VERSION,
-                "training_run_association": "unknown"})
+                "training_run_association": "unknown"}, candidate_config=candidate_config)

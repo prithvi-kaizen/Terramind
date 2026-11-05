@@ -6,6 +6,8 @@ from pathlib import Path
 import sys
 import tempfile
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+import json
+import jsonschema
 import numpy as np
 import rasterio
 from streamlit.testing.v1 import AppTest
@@ -32,7 +34,13 @@ def main():
             extra_passes=1
         diagnostic=check_reference_mask(actual_mask,reference_mask,probability)
         print('REFERENCE_DIAGNOSTIC',diagnostic,flush=True)
-        assert packet['schema_version']=='1.1'
+        assert packet['schema_version']=='2.0'
+        jsonschema.validate(json.loads(Path(packet['artifacts']['alert_path']).read_text()),json.loads((root/'docs/alert-schema-2.0.json').read_text()))
+        assert packet['candidate_count']==len(packet['candidates'])
+        with rasterio.open(packet['artifacts']['probability_path']) as probabilities:
+            assert probabilities.shape==(512,512) and probabilities.dtypes==('float32',)
+        with rasterio.open(packet['artifacts']['filtered_mask_path']) as filtered:
+            assert np.array_equal(actual_mask,filtered.read(1))
         assert int(reference_mask.sum())==1244
         assert packet['detection']['plume_pixel_count']==int(actual_mask.sum())
         previous=endpoint.RESULTS

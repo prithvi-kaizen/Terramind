@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "checkpoint_sha256": "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0",
+  "checkpoint_bytes": 88804452,
+  "architecture_version": "terramind-small-swir-heads-v1",
+  "preprocessing_version": "swir-percentile-v1",
+  "encoder": {
+    "parameters": 21481728,
+    "frozen": true
+  },
+  "trainable_parameters": 616388,
+  "decoder": {
+    "transposed_convolutions": 4,
+    "output_convolutions": 1
+  },
+  "severity": {
+    "pooling": "mean over patch embeddings",
+    "hidden_dimensions": [
+      384,
+      128,
+      3
+    ]
+  },
+  "historical_notebook": {
+    "path": "notebooks/TerraMind.ipynb",
+    "sha256": "7c06e7cda16cda655e19a3e7d8e2b34afe279c511053c36fad50c5c7f25b5459",
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "scheduler_patience": 3,
+    "joint_epochs": 20,
+    "batch_size": 2,
+    "segmentation_weight": 0.7,
+    "severity_weight": 0.3
+  },
+  "checkpoint_training_run": "unknown"
+}

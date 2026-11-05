@@ -88,3 +88,7 @@ Repository validation checks structure and artifact integrity; tests exercise in
 ## Phase 1 tools
 
 See [PHASE_1.md](PHASE_1.md) for CPU benchmarks, evaluation manifests, corrected working-notebook preparation, unique request output directories, and retention commands.
+
+## Phase 2 outputs
+
+The current runtime exports schema 2.0 candidate alerts, raw probabilities, raw/filtered masks and WGS84 GeoJSON. See [PHASE_2.md](PHASE_2.md) for downloads, optional filters, the schema 1.1 migration, validation evidence and reproduction commands.

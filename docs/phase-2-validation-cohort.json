@@ -1,0 +1,262 @@
+{
+  "dataset_revision": "7d2a4feb4d50701ee9962d52c2cab769e9f13ba5",
+  "selection": "first N validation IDs ranked by sha256(terramind-phase2-validation-v1:+id), before predictions",
+  "selected": [
+    {
+      "id": "57b80d69-bdbe-4513-8388-28f6fd941b43",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 146,
+      "split": "validation"
+    },
+    {
+      "id": "00bd30e0-6f33-4573-85db-e48797ebe3dd",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 84,
+      "split": "validation"
+    },
+    {
+      "id": "c087ee28-77a6-417c-a2e0-30a8d760c458",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 47,
+      "split": "validation"
+    },
+    {
+      "id": "e1dc08a1-c345-424c-ab8c-8b0d40da82be",
+      "country": "Turkmenistan",
+      "site": "T_23",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 742,
+      "split": "validation"
+    },
+    {
+      "id": "643ee2b0-3a87-42a5-854b-142993e6ea58",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 44,
+      "split": "validation"
+    },
+    {
+      "id": "73a9f9c5-d3df-40de-9968-38a319cdce17",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 75,
+      "split": "validation"
+    },
+    {
+      "id": "95184224-06b9-425d-a960-f90a528ca535",
+      "country": "Turkmenistan",
+      "site": "T_26",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 864,
+      "split": "validation"
+    },
+    {
+      "id": "3e3a80aa-9acb-4b0f-aed8-43fe1503fecb",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 159,
+      "split": "validation"
+    },
+    {
+      "id": "ec0f346b-9442-44c1-aed1-ed5cdb677b04",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 143,
+      "split": "validation"
+    },
+    {
+      "id": "e3ca897a-801c-46d1-a724-b87ea6b84663",
+      "country": "Yemen",
+      "site": "Y_1",
+      "source_file": "methaneset-s2-finetune_Yemen.tacozip",
+      "parent_index": 83,
+      "split": "validation"
+    },
+    {
+      "id": "f2ff4a41-fc8b-4029-9e8e-a1c7104ac667",
+      "country": "Turkmenistan",
+      "site": "T_27",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 902,
+      "split": "validation"
+    },
+    {
+      "id": "8472feed-85b9-45bd-bcf2-5b93af4ab9f7",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 144,
+      "split": "validation"
+    },
+    {
+      "id": "d63be4fd-d200-4c39-a111-db0abf6b77f0",
+      "country": "Libya",
+      "site": "L_15",
+      "source_file": "methaneset-s2-finetune_Libya.tacozip",
+      "parent_index": 64,
+      "split": "validation"
+    },
+    {
+      "id": "2cc6b94c-3d2b-4649-bac5-fef5b0681651",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 158,
+      "split": "validation"
+    },
+    {
+      "id": "a05826d9-bd7a-44a3-868c-5aef504b660f",
+      "country": "Algeria",
+      "site": "A_16",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 117,
+      "split": "validation"
+    },
+    {
+      "id": "1ab95f5d-4de9-43dc-862a-46d521c42831",
+      "country": "Turkmenistan",
+      "site": "T_25",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 808,
+      "split": "validation"
+    },
+    {
+      "id": "2b1e968c-4eea-42dd-9d7c-f9973d5d7741",
+      "country": "Kazakhstan",
+      "site": "K_3",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 29,
+      "split": "validation"
+    },
+    {
+      "id": "f5d5c2e5-b658-470d-8879-4944cccf8b81",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 140,
+      "split": "validation"
+    },
+    {
+      "id": "9d7ed1a8-2ae1-4d6f-bac7-4b3c7a31ff94",
+      "country": "Kazakhstan",
+      "site": "K_8",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 145,
+      "split": "validation"
+    },
+    {
+      "id": "6f111a46-e583-40fa-871b-49ef5efcfd96",
+      "country": "Algeria",
+      "site": "A_13",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 50,
+      "split": "validation"
+    },
+    {
+      "id": "e1275c53-b326-499f-b2fd-436290fcb0c6",
+      "country": "Algeria",
+      "site": "A_22",
+      "source_file": "methaneset-s2-finetune_Algeria.tacozip",
+      "parent_index": 149,
+      "split": "validation"
+    },
+    {
+      "id": "c8d9c133-f7ff-40af-85ee-860ce53a7d09",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 509,
+      "split": "validation"
+    },
+    {
+      "id": "85b67125-a302-46da-a8d4-07e75f70b443",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 504,
+      "split": "validation"
+    },
+    {
+      "id": "299a07ee-5eb8-4001-b26a-8ed0b8d4c99f",
+      "country": "Turkmenistan",
+      "site": "T_10",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 248,
+      "split": "validation"
+    },
+    {
+      "id": "3cd68abd-1c02-4e47-be2b-a790ccb66693",
+      "country": "Libya",
+      "site": "L_14",
+      "source_file": "methaneset-s2-finetune_Libya.tacozip",
+      "parent_index": 56,
+      "split": "validation"
+    },
+    {
+      "id": "66a4d210-c140-46bd-bb87-543d1abfc02d",
+      "country": "Turkmenistan",
+      "site": "T_22",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 634,
+      "split": "validation"
+    },
+    {
+      "id": "b77027e6-4c56-49e9-ad91-17253754759b",
+      "country": "Turkmenistan",
+      "site": "T_26",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 869,
+      "split": "validation"
+    },
+    {
+      "id": "a83bb7d9-d2ee-4f6a-9a90-ff8e60ef335e",
+      "country": "Turkmenistan",
+      "site": "T_10",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 253,
+      "split": "validation"
+    },
+    {
+      "id": "18dec111-7383-4e1f-b233-4522c9571a0c",
+      "country": "Kazakhstan",
+      "site": "K_S_2",
+      "source_file": "methaneset-s2-finetune_Kazakhstan.tacozip",
+      "parent_index": 270,
+      "split": "validation"
+    },
+    {
+      "id": "90141a35-ca69-4c0b-b925-973ef04caa27",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 505,
+      "split": "validation"
+    },
+    {
+      "id": "097038e5-df6c-4538-bbb7-5eb3537ac2c7",
+      "country": "Turkmenistan",
+      "site": "T_22",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 633,
+      "split": "validation"
+    },
+    {
+      "id": "273a5f5f-879b-43de-a0cf-61fa434ca1b5",
+      "country": "Turkmenistan",
+      "site": "T_17",
+      "source_file": "methaneset-s2-finetune_Turkmenistan.tacozip",
+      "parent_index": 517,
+      "split": "validation"
+    }
+  ]
+}
