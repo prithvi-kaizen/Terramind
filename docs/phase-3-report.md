@@ -48,6 +48,6 @@ HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MPLCONFIGDIR=/tmp/terramind-mpl python script
 
 See [PHASE_3.md](PHASE_3.md) for commands and input contracts, and [release conditions](PHASE_3_RELEASE.md) before promoting model changes.
 
-Local verification: 100 tests passed; repository validation checked 38 Python files, five notebooks, documentation links, JSON and original artifact hashes. Linux CI results are recorded after the branch run completes.
+Local verification: 100 tests passed; repository validation checked 38 Python files, five notebooks, documentation links, JSON and original artifact hashes. Both Linux jobs passed for implementation commit `3a96eb3` in [Actions run 42055595340](https://github.com/prithvi-kaizen/Terramind/actions/runs/42055595340), including all tests, complete CPU dependency installation, raw/API/cloud regression, dashboard checks and the Phase 3 frozen-feature/gradient/flip smoke. [PR 3](https://github.com/prithvi-kaizen/Terramind/pull/3) contains the reviewable changes. It is not merged or deployed.
 
 Documentation review PASS: numerical claims trace to the saved compute/inventory reports; artificial fixtures and missing research evidence are explicitly identified. No interface or visual assets were added.

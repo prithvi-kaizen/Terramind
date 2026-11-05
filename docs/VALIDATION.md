@@ -61,4 +61,4 @@ Phase 2 passed 71 unit tests and both Linux jobs in [Actions run 42024939718](ht
 
 ## Phase 3 tooling
 
-The Phase 3 local suite passes 100 tests. Offline real-checkpoint smoke checks verify cached/uncached frozen-feature equivalence, decoder-only gradients, optional flip review and unchanged raw/API/cloud predictions. Existing dashboard smoke checks also pass. The [Phase 3 report](phase-3-report.md) distinguishes software verification from deferred research training and real temporal validation.
+The Phase 3 local suite passes 100 tests. Offline real-checkpoint smoke checks verify cached/uncached frozen-feature equivalence, decoder-only gradients, optional flip review and unchanged raw/API/cloud predictions. Existing dashboard smoke checks also pass. Both Linux jobs passed for implementation commit `3a96eb3` in [Actions run 42055595340](https://github.com/prithvi-kaizen/Terramind/actions/runs/42055595340). The [Phase 3 report](phase-3-report.md) distinguishes software verification from deferred research training and real temporal validation.
