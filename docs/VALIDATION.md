@@ -58,3 +58,7 @@ The final code passed 51 tests and both Linux CI jobs in [run 41584954483](https
 ## Phase 2 validation
 
 Phase 2 passed 71 unit tests and both Linux jobs in [Actions run 42024939718](https://github.com/prithvi-kaizen/Terramind/actions/runs/42024939718). It adds schema 2.0 and geodesic candidates while preserving raw predictions. The final paired benchmark met the 20% p95 target with 14.1% overhead on the repeated sample. The separate 32-pair validation pilot did not support promoting any removal rule, so all remain informational. The public Streamlit app also passed sample inference, candidate inspection and a parsed four-feature GeoJSON download after deployment. See [the Phase 2 report](phase-2-report.md) for evidence and limitations.
+
+## Phase 3 tooling
+
+The Phase 3 local suite passes 100 tests. Offline real-checkpoint smoke checks verify cached/uncached frozen-feature equivalence, decoder-only gradients, optional flip review and unchanged raw/API/cloud predictions. Existing dashboard smoke checks also pass. The [Phase 3 report](phase-3-report.md) distinguishes software verification from deferred research training and real temporal validation.

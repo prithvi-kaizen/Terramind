@@ -157,7 +157,7 @@ python scripts/validate_repository.py
 python -m pytest
 ```
 
-The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 71 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 100 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference, dashboard checks and frozen-feature/gradient/review smoke checks with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce research training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
 
 The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evaluation manifests, and output retention. Phase 1 software is deployed; external evaluation evidence is documented in the [public-data report](docs/EVALUATION.md).
 
@@ -169,7 +169,7 @@ The validation pilot did not justify promoting any removal rule: reduced false a
 
 ## Next steps
 
-The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) covers shared and benchmarked inference, inexpensive plume-candidate checks, and targeted training with optional temporal corroboration. It defines compute limits and acceptance checks for each phase. Phases 1 and 2 software are implemented. Phase 3 targeted training and optional corroboration remain planned. Physical emission estimates and embedded deployment remain later research work.
+The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) defines compute limits and acceptance checks. Phases 1 and 2 are implemented. [Phase 3 research tooling](docs/PHASE_3.md) adds frozen-feature caches, bounded decoder training, optional flip review and up to three-date corroboration. Reviewed training data and real aligned dates are still required for scientific experiments; no new checkpoint or accuracy improvement is claimed. See the [Phase 3 report](docs/phase-3-report.md). Physical emission estimates and embedded deployment remain later research work.
 
 ## Attribution and licensing
 

@@ -1,0 +1,66 @@
+{
+  "checkpoint_sha256": "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0",
+  "input_sha256": "1250674b0e112721b254fdfe52408bddabfacce630bad473f4dd5c7bf6838603",
+  "device": "cpu",
+  "threads": 2,
+  "python": "3.12.4",
+  "torch": "2.11.0",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "features": {
+    "encoder_passes": 1,
+    "cache_hits": 1,
+    "cache_seconds": 0.2360030000563711,
+    "cache_bytes": 281493,
+    "cache_entries": 1,
+    "version": "frozen-tokens-v1",
+    "cold_seconds": 0.19689629191998392,
+    "hit_seconds": 0.03915845905430615,
+    "cached_uncached_max_abs_difference": 0.0,
+    "disposable_decoder_step_loss": 0.023250173777341843,
+    "decoder_step_labels": "artificial all-zero software fixture; no scientific evaluation"
+  },
+  "consistency": {
+    "enabled": true,
+    "base_passes": 1,
+    "extra_passes": 1,
+    "signal": {
+      "mask_iou": 0.357188093730209,
+      "both_empty": false,
+      "mean_absolute_probability_difference": 0.004063783213496208,
+      "calibrated_uncertainty": false
+    },
+    "input_sha256": "1250674b0e112721b254fdfe52408bddabfacce630bad473f4dd5c7bf6838603",
+    "checkpoint_sha256": "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0",
+    "preprocessing": "swir-percentile-v1",
+    "architecture": "terramind-small-swir-heads-v1",
+    "threshold": 0.5,
+    "transform": "horizontal flip, inverted before comparison"
+  },
+  "benchmark": {
+    "default_off": {
+      "runs": 30,
+      "median_seconds": 0.09971899952506647,
+      "p95_seconds": 0.10680253140162677
+    },
+    "flip_enabled": {
+      "runs": 30,
+      "median_seconds": 0.16230939596425742,
+      "p95_seconds": 0.1691909545683302
+    }
+  },
+  "review_passes": {
+    "entries": 1,
+    "loads": 1,
+    "forward_passes": 92,
+    "key": [
+      "923aed2dac32cf632e5157e392bb7f20db24c7081d2908cb464a9ef3b2e561d0",
+      "cpu",
+      "terramind-small-swir-heads-v1",
+      "swir-percentile-v1"
+    ]
+  },
+  "total_wall_seconds": 13.791914459085092,
+  "peak_rss_bytes": 1161592832,
+  "quality_claim": false,
+  "workload": "single included sample, no temporal observations or research training"
+}

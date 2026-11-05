@@ -53,3 +53,4 @@ jobs:
         run: |
           python scripts/smoke_inference.py
           python scripts/smoke_phase2_ui.py
+          python scripts/smoke_phase3.py

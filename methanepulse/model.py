@@ -26,12 +26,15 @@ class TerraMindMethanePulse(nn.Module):
             nn.Linear(128, 3)
         )
 
-    def forward(self, x):
-        B = x.shape[0]
+    def encode(self, x):
         x_224 = F.interpolate(x, size=(224, 224), mode='bilinear', align_corners=False)
+        self.encoder.eval()
         with torch.no_grad():
             features = self.encoder(x_224)
-        feat     = features[-1]
+        return features[-1]
+
+    def decode(self, feat):
+        B = feat.shape[0]
         feat_map = feat.permute(0, 2, 1).contiguous().reshape(B, 384, 14, 14)
         seg_logits = self.seg_decoder(feat_map)
         seg_logits = F.interpolate(seg_logits, size=(512, 512),
@@ -39,4 +42,7 @@ class TerraMindMethanePulse(nn.Module):
         pooled          = feat.mean(dim=1)
         severity_logits = self.severity_head(pooled)
         return seg_logits, severity_logits
+
+    def forward(self, x):
+        return self.decode(self.encode(x))
 
