@@ -38,7 +38,7 @@ TinyUNet's saved global pixel accuracy is 0.9969, but foreground occupies little
 
 ## Alert semantics
 
-The maintained CLI uses schema version 1.1:
+The maintained CLI uses schema version 2.0, retaining the raw detection fields from 1.1:
 
 - `centroid_geographic` retains projected `[x, y]` coordinates in `source.crs` for compatibility. Its name is historical; it is not necessarily longitude/latitude.
 - `centroid_wgs84` provides `[longitude, latitude]` in EPSG:4326, using pixel-centre coordinates and the full raster affine transform.
@@ -59,6 +59,10 @@ All 1,000 published GeoCH4PlumeNet inputs were attempted at threshold 0.5. The p
 The existing checkpoint at threshold 0.5 was evaluated on a deterministic MethaneSET test subset: 64 targets and 64 provider-curated clean references. One pair had invalid pixels and was rejected, leaving 63 positives and 63 negatives. An explicitly declared offline resize adapter returned probability maps to the native label grid. Pixel IoU was 0.01742 and F1 was 0.03425; 62 of 63 clean references triggered predictions. Only 33 of 63 positive scenes had any overlap with their annotated plume.
 
 These results demonstrate poor real-scene transfer under this adapter. They do not establish operational methane detection. The subset is small and includes correlated sites; references are provider-labeled rather than independently reviewed by this project. The initial external run had an archive-local catalog ID join bug and is superseded by a corrected rerun. See [the evaluation protocol and reports](EVALUATION.md).
+
+## Candidate review (Phase 2)
+
+Four-connected regions receive physical area, GeoJSON geometry, pixel/CRS-aware centroids, and informational quality flags. Area is WGS84 ellipsoidal area, including polygon holes. Candidate flags and evidence states are uncalibrated; neither an unflagged candidate nor high model probability confirms methane. Default output preserves all raw predictions. Explicit experimental filtering creates a separate artifact and does not rewrite severity. The 32-pair validation pilot failed the two-percentage-point recall-loss promotion criterion for rules that reduced false positives. All removal rules remain off by default. See [PHASE_2.md](PHASE_2.md).
 
 ## Known limitations
 

@@ -20,8 +20,8 @@ Screenshot of a verified sample prediction on the hosted app. The displayed seve
 
 ## What you can run
 
-- A Streamlit dashboard with sample-tile inference, tile uploads, an alert log, and a model-card view.
-- A command-line inference script that writes a binary GeoTIFF mask and JSON alert.
+- A Streamlit dashboard with sample-tile inference, validated uploads, individual candidate inspection, artifact downloads, an alert log, and a model-card view.
+- A command-line inference script exporting raw/filtered masks, probabilities, candidate GeoJSON, and a schema 2.0 alert.
 - A Flask `POST /predict` endpoint for local multipart uploads.
 - Five research notebooks covering data exploration, a spectral baseline, TinyUNet, and the TerraMind model.
 - The trained checkpoint, sample input, saved sample outputs, and experiment logs.
@@ -157,13 +157,19 @@ python scripts/validate_repository.py
 python -m pytest
 ```
 
-The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 51 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
+The CI workflow has two jobs: `validate` checks notebook structure, artifact hashes, documentation links, and 71 runtime tests; `cloud-smoke` installs the complete Linux CPU environment and runs real sample inference through the cloud entrypoint with model downloads disabled. See [validation evidence](docs/VALIDATION.md) and [GitHub Actions](https://github.com/prithvi-kaizen/Terramind/actions). These checks do not reproduce training or establish model quality. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing data processing or metrics.
 
 The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evaluation manifests, and output retention. Phase 1 software is deployed; external evaluation evidence is documented in the [public-data report](docs/EVALUATION.md).
 
+## Candidate review and exports
+
+Phase 2 separates four-connected foreground regions into candidates with geodesic area, geometry, probability summaries and review flags. It uses the same model pass. Raw predictions remain unchanged; all heuristic removal rules are off by default. In Streamlit, inspect **Plume candidates** and expand **Download prediction artifacts** for mask/probability GeoTIFFs, GeoJSON and JSON. An advanced setting enables explicit experimental filtering.
+
+The validation pilot did not justify promoting any removal rule: reduced false alarms came with excessive recall loss. See the [Phase 2 guide and migration notes](docs/PHASE_2.md), [validation report](docs/phase-2-validation.json), and [CPU benchmark](docs/phase-2-benchmark.json). Phase 2 improves inspection and export; it does not solve poor real-scene model transfer.
+
 ## Next steps
 
-The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) covers shared and benchmarked inference, inexpensive plume-candidate checks, and targeted training with optional temporal corroboration. It defines compute limits and acceptance checks for each phase. Phase 1 software is available; Phase 2 candidate checks and Phase 3 training/corroboration remain planned. Physical emission estimates and embedded deployment remain later research work.
+The public demo and Linux inference smoke check are available. The [three-phase implementation plan](docs/IMPLEMENTATION_PLAN.md) covers shared and benchmarked inference, inexpensive plume-candidate checks, and targeted training with optional temporal corroboration. It defines compute limits and acceptance checks for each phase. Phases 1 and 2 software are implemented. Phase 3 targeted training and optional corroboration remain planned. Physical emission estimates and embedded deployment remain later research work.
 
 ## Attribution and licensing
 
