@@ -90,3 +90,41 @@ def test_reject_invalid_metadata_before_loading_model(fake_model,tmp_path,kind):
     with pytest.raises(ValueError):
         runtime.predict_tile(target,checkpoint)
     assert not models
+
+
+def test_phase2_artifacts_preserve_raw_and_export_provenance(fake_model,tmp_path):
+    from methanepulse.candidates import CandidateConfig
+    checkpoint,_,_=fake_model
+    packet=runtime.run_inference(SAMPLE,checkpoint,tmp_path/'out',.4,
+        candidate_config=CandidateConfig(filter_flags=('edge_contact',)))
+    assert packet['schema_version']=='2.0'
+    assert packet['detection']['plume_pixel_count']==512*512
+    assert packet['filtered']['plume_pixel_count']==0
+    assert packet['candidate_count']==1
+    assert runtime.cache_info()['forward_passes']==1
+    with rasterio.open(packet['artifacts']['mask_path']) as raw,rasterio.open(packet['artifacts']['filtered_mask_path']) as filtered,rasterio.open(packet['artifacts']['probability_path']) as probability:
+        assert raw.read(1).all() and not filtered.read(1).any()
+        assert np.all(probability.read(1)==.5)
+        assert raw.crs==filtered.crs==probability.crs
+        assert raw.transform==filtered.transform==probability.transform
+    geojson=json.loads(Path(packet['artifacts']['geojson_path']).read_text())
+    assert geojson['features'][0]['id']==packet['candidates'][0]['id']
+    assert geojson['features'][0]['properties']['source_crs']=='EPSG:32614'
+    assert geojson['provenance']['model']['checkpoint_sha256']==packet['model']['checkpoint_sha256']
+    assert geojson['provenance']['postprocessing']['config_sha256']==packet['postprocessing']['config_sha256']
+
+
+def test_default_filter_artifact_equals_raw_mask(fake_model,tmp_path):
+    checkpoint,_,_=fake_model
+    packet=runtime.run_inference(SAMPLE,checkpoint,tmp_path/'out',.4)
+    assert packet['filtered']['enabled'] is False
+    with rasterio.open(packet['artifacts']['mask_path']) as raw,rasterio.open(packet['artifacts']['filtered_mask_path']) as filtered:
+        assert np.array_equal(raw.read(1),filtered.read(1))
+    assert packet['filtered']['removed_pixel_count']==0
+
+
+def test_invalid_candidate_configuration_fails_before_model_load(fake_model,tmp_path):
+    checkpoint,models,_=fake_model
+    with pytest.raises(ValueError,match='CandidateConfig'):
+        runtime.run_inference(SAMPLE,checkpoint,tmp_path,candidate_config={})
+    assert not models

@@ -1,6 +1,8 @@
 import requests
+import hashlib
+import torch
 import streamlit as st
-import sys, json, time, tempfile, subprocess, os, uuid
+import sys, json, time, subprocess, os, uuid
 import numpy as np
 import rasterio
 from PIL import Image
@@ -13,7 +15,10 @@ API_URL = f"http://127.0.0.1:{os.environ.get('METHANEPULSE_PORT', '5001')}/predi
 INFERENCE_MODE = os.environ.get("METHANEPULSE_INFERENCE_MODE", "direct")
 
 sys.path.insert(0, str(Path(__file__).parent))
+from methanepulse.preprocessing import load_and_preprocess
 from methanepulse.runtime import run_inference
+from methanepulse.candidates import CandidateConfig, FILTER_FLAGS
+FLAG_LABELS = {"small_area":"Below review area", "edge_contact":"Touches tile edge", "threshold_sensitive":"Sensitive to threshold", "invalid_pixel_overlap":"Overlaps invalid pixels"}
 
 # ── Auto-launch Flask endpoint if not already running ──────────
 if INFERENCE_MODE == "api" and "_flask_proc" not in st.session_state:
@@ -132,6 +137,17 @@ st.markdown("""
     font-size: 0.72rem !important; color: #8b949e !important;
     text-transform: uppercase; letter-spacing: 0.05em;
   }
+  button:focus-visible, input:focus-visible, [role="combobox"]:focus-visible {
+    outline: 2px solid #4f98a3 !important; outline-offset: 3px;
+  }
+  [data-testid="stDownloadButton"] button { min-height: 44px; }
+  [data-baseweb="select"] > div { min-height: 44px; }
+  @media (max-width: 760px) {
+    .block-container { padding: 1rem !important; }
+    [data-testid="stHorizontalBlock"] { flex-direction: column; gap: 0.75rem; }
+    [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] { width: 100% !important; min-width: 0 !important; }
+    code { overflow-wrap: anywhere; }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -140,17 +156,14 @@ SAMPLE_DIR = BASE_DIR / "sample_input"
 CKPT_PATH  = BASE_DIR / "terramind_methane_best.pt"
 RESULTS    = BASE_DIR / "outputs" / "predictions" / st.session_state.setdefault("_output_session", uuid.uuid4().hex)
 DOCS_DIR   = BASE_DIR / "docs"
+MODEL_METADATA = json.loads((DOCS_DIR / "model_configuration.json").read_text())
 SEV_FG     = {"HIGH": "#e03131", "MEDIUM": "#ff8c00", "LOW": "#6daa45"}
 
 def tiff_to_rgb(path):
-    with rasterio.open(path) as src:
-        img = src.read().astype(np.float32)
-    eps = 1e-6
-    def norm(b):
-        lo, hi = np.percentile(b, 2), np.percentile(b, 98)
-        return np.clip((b - lo) / (hi - lo + eps), 0, 1)
-    r, g = norm(img[11]), norm(img[12])
-    return (np.stack([r, g, np.zeros_like(r)], axis=-1) * 255).astype(np.uint8)
+    tensor, *_ = load_and_preprocess(path, torch.device('cpu'))
+    r,g = tensor[0].numpy()
+    return (np.stack([r,g,np.zeros_like(r)],axis=-1)*255).astype(np.uint8)
+
 
 def overlay_mask(rgb_np, mask_path, alpha=0.6):
     with rasterio.open(mask_path) as src:
@@ -208,14 +221,26 @@ with tab_demo:
         else:
             up = st.file_uploader("Select .tiff", type=["tiff","tif"], label_visibility="collapsed")
             if up:
-                tmp = tempfile.NamedTemporaryFile(suffix=".tiff", delete=False)
-                tmp.write(up.read()); tmp.close()
-                tiff_path = Path(tmp.name)
-                st.image(tiff_to_rgb(tiff_path), caption="B11 + B12 false colour", width="stretch")
+                payload=up.getvalue()
+                upload_dir=RESULTS/'inputs';upload_dir.mkdir(parents=True,exist_ok=True)
+                tiff_path=upload_dir/(hashlib.sha256(payload).hexdigest()+'.tiff')
+                if not tiff_path.exists():tiff_path.write_bytes(payload)
+                try:
+                    preview=tiff_to_rgb(tiff_path)
+                    st.image(preview,caption="B11 + B12 false colour",width="stretch")
+                except (ValueError,rasterio.errors.RasterioError) as exc:
+                    st.error(f"Unsupported tile: {exc}")
+                    tiff_path=None
 
         st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
         with st.expander("Advanced settings"):
             threshold = st.slider("Detection threshold", 0.1, 0.9, 0.5, 0.05)
+            min_area_m2 = st.number_input("Small-area review threshold (m²)",min_value=0.0,value=1600.0,step=100.0)
+            filter_enabled = st.checkbox("Enable experimental filtering",value=False)
+            st.caption("Rules are unvalidated review signals. Filtering does not confirm methane and never replaces the raw output.")
+            selected_flags = st.multiselect("Experimental removal rules", options=list(FILTER_FLAGS),
+                default=['small_area'], disabled=not filter_enabled,format_func=lambda value:FLAG_LABELS[value])
+            filter_flags = tuple(selected_flags) if filter_enabled else ()
         if "threshold" not in dir(): threshold = 0.5
         run = st.button("Run Inference", disabled=(tiff_path is None))
 
@@ -232,7 +257,7 @@ with tab_demo:
                         response = requests.post(
                             API_URL,
                             files={"file": f},
-                            data={"threshold": threshold},
+                            data={"threshold": threshold, "min_area_m2":min_area_m2, "filter_flags":",".join(filter_flags)},
                             timeout=(5, 180),
                         )
                     response.raise_for_status()
@@ -259,6 +284,7 @@ with tab_demo:
                         checkpoint_path      = str(CKPT_PATH),
                         output_dir           = str(RESULTS),
                         confidence_threshold = threshold,
+                        candidate_config = CandidateConfig(min_area_m2=min_area_m2,filter_flags=filter_flags),
                     )
                     progress.progress(90, text="Inference complete...")
                 except Exception as exc:
@@ -278,18 +304,25 @@ with tab_demo:
             is_alert = pkt["status"] == "ALERT"
             st.markdown(
                 f'<div class="{"pill-alert" if is_alert else "pill-clear"}">'
-                f'{"METHANE PLUME DETECTED" if is_alert else "TILE CLEAR — NO PLUME"}</div>',
+                f'{"PREDICTED CANDIDATES · REVIEW REQUIRED" if is_alert else "NO CANDIDATE ABOVE THRESHOLD"}</div>',
                 unsafe_allow_html=True
             )
+            st.caption("Results use the last successful run's input and settings. A clear mask does not certify absence of methane.")
+            display_key = 'mask_path'
+            if pkt.get('filtered',{}).get('enabled'):
+                view = st.radio('Displayed mask',['Raw prediction','Experimental filtered mask'],horizontal=True)
+                if view == 'Experimental filtered mask': display_key='filtered_mask_path'
+                st.caption(f"Raw foreground: {det['plume_pixel_count']} pixels. Filtered foreground: {pkt['filtered']['plume_pixel_count']} pixels. Severity remains the raw model's area class.")
             img_col, stat_col = st.columns([1.3, 1])
             with img_col:
                 stem      = Path(st.session_state["tile_path"]).stem
-                mask_path = Path(pkt.get("artifacts", {}).get("mask_path", str(RESULTS / f"{stem}_mask.tiff")))
+                mask_path = Path(pkt.get("artifacts", {}).get(display_key, str(RESULTS / f"{stem}_mask.tiff")))
                 rgb_np    = tiff_to_rgb(st.session_state["tile_path"])
-                if mask_path.exists() and det["plume_detected"]:
-                    st.image(overlay_mask(rgb_np, mask_path), caption="Plume overlay (red = detected)", width="stretch")
+                displayed_pixels=det['plume_pixel_count'] if display_key=='mask_path' else pkt['filtered']['plume_pixel_count']
+                if mask_path.exists() and displayed_pixels>0:
+                    st.image(overlay_mask(rgb_np, mask_path), caption="Selected prediction overlay (red = model foreground)", width="stretch")
                 else:
-                    st.image(rgb_np, caption="No plume detected", width="stretch")
+                    st.image(rgb_np, caption="No foreground above the selected threshold", width="stretch")
             with stat_col:
                 st.metric("Plume pixels", f"{det['plume_pixel_count']:,}")
                 st.metric("Coverage",     f"{det['plume_coverage_pct']}%")
@@ -304,9 +337,50 @@ with tab_demo:
                 )
                 if det.get("centroid_geographic"):
                     st.markdown("<div style='height:0.6rem'></div>", unsafe_allow_html=True)
-                    st.caption(f"Projected plume centroid (x, y): {det['centroid_geographic']}")
+                    st.caption(f"Source-CRS plume centroid ({pkt['source']['crs']}; x, y): {det['centroid_geographic']}")
                 if det.get('centroid_wgs84'):
                     st.caption(f"WGS84 plume centroid (lon, lat): {det['centroid_wgs84']}")
+            candidates = pkt.get('candidates',[])
+            st.subheader('Plume candidates')
+            st.caption('Candidate and Needs review are evidence states, not verified leaks. Mean probability is uncalibrated.')
+            if candidates:
+                st.dataframe(pd.DataFrame([{'ID':c['id'],'Pixels':c['pixel_count'],
+                    'Area (m²)':round(c['area_m2'],1),'State':c['evidence_state'].replace('_',' '),
+                    'Flags':', '.join(FLAG_LABELS[flag] for flag in c['quality_flags']) or 'none',
+                    'Mean probability':round(c['probability']['mean'],3),
+                    'Removed by selected filter':c['removed_by_experimental_filter']} for c in candidates]),hide_index=True,width='stretch')
+                with st.expander('Inspect an individual candidate'):
+                    selected_id=st.selectbox('Candidate ID',[c['id'] for c in candidates])
+                    selected=next(c for c in candidates if c['id']==selected_id)
+                    st.json({k:v for k,v in selected.items() if k!='geometry_wgs84'})
+                    labels_path=Path(pkt['artifacts']['candidate_labels_path'])
+                    if labels_path.is_file():
+                        with rasterio.open(labels_path) as label_raster:
+                            component=label_raster.read(1)==selected['label_id']
+                        rgba=np.dstack([rgb_np,np.full(rgb_np.shape[:2],255,dtype='uint8')])
+                        rgba[component,:3]=(np.array([224,49,49])*.65+rgba[component,:3]*.35).astype('uint8')
+                        x0,y0,x1,y1=selected['bbox_pixels']
+                        st.image(rgba[max(0,y0-4):min(512,y1+4),max(0,x0-4):min(512,x1+4)],
+                            caption=f"{selected_id}: raw candidate with four-pixel context",width='stretch')
+            else:
+                st.info('No connected candidates at this threshold. Inspect the probability raster before interpreting this as a negative observation.')
+            with st.expander('Download prediction artifacts'):
+                for key,label,mime in [
+                    ('mask_path','Raw mask GeoTIFF','image/tiff'),
+                    ('probability_path','Raw probability GeoTIFF','image/tiff'),
+                    ('filtered_mask_path','Filtered mask GeoTIFF','image/tiff'),
+                    ('geojson_path','Candidate GeoJSON','application/geo+json'),
+                    ('alert_path','Alert JSON','application/json'),
+                ]:
+                    artifact=pkt.get('artifacts',{}).get(key)
+                    if artifact:
+                        path=Path(artifact).resolve()
+                        allowed=(BASE_DIR/'outputs'/'predictions').resolve()
+                        if path.is_relative_to(allowed) and path.is_file():
+                            st.download_button(label,path.read_bytes(),file_name=path.name,mime=mime,
+                                key=f"{pkt['alert_id']}-{key}",on_click='ignore',width='stretch')
+                        else:
+                            st.caption(f'{label}: artifact unavailable on this worker. Run inference again.')
             with st.expander("Alert packet JSON"):
                 st.json(pkt)
         else:
@@ -354,12 +428,15 @@ with tab_alerts:
 # ═══════════════════════════════════════════════════════════════
 with tab_model:
 
+    st.caption(f"Architecture metadata verified against checkpoint {MODEL_METADATA['checkpoint_sha256'][:12]}…; configuration {MODEL_METADATA['architecture_version']}.")
+    if 'packet' in st.session_state and st.session_state['packet'].get('model',{}).get('checkpoint_sha256') != MODEL_METADATA['checkpoint_sha256']:
+        st.warning('The active checkpoint differs from the verified architecture metadata. Regenerate docs/model_configuration.json before interpreting this model card.')
     # ── Row 1: Architecture + Config ──────────────────────────
     col_arch, col_cfg = st.columns([1, 1], gap="large")
 
     with col_arch:
         st.markdown('<p class="section-label">Architecture</p>', unsafe_allow_html=True)
-        st.markdown("""
+        st.markdown(f"""
         <div class="arch-wrapper">
 
           <div class="arch-block">
@@ -377,7 +454,7 @@ with tab_model:
             <div class="arch-block-title arch-frozen">Encoder &nbsp;·&nbsp; FROZEN</div>
             <div class="arch-block-body">
               TerraMind-1.0-small (foundation model)<br>
-              21,481,728 params &nbsp;·&nbsp; no gradient updates<br>
+              {MODEL_METADATA['encoder']['parameters']:,} params &nbsp;·&nbsp; no gradient updates<br>
               Output &nbsp;<code style="background:#0d1117;padding:1px 6px;border-radius:4px">196 × 384</code>&nbsp; patch embeddings
             </div>
           </div>
@@ -388,7 +465,7 @@ with tab_model:
             <div class="arch-block">
               <div class="arch-block-title arch-train">Seg Decoder &nbsp;·&nbsp; TRAINABLE</div>
               <div class="arch-block-body">
-                4× TransposeConv2d<br>+ BatchNorm + ReLU + 1×1 Conv<br>
+                {MODEL_METADATA['decoder']['transposed_convolutions']}× TransposeConv2d<br>+ BatchNorm + ReLU + 1×1 Conv<br>
                 Output &nbsp;<code style="background:#0d1117;padding:1px 6px;border-radius:4px">512 × 512</code>&nbsp; binary mask
               </div>
             </div>
@@ -411,7 +488,7 @@ with tab_model:
             <div class="arch-block-title arch-neutral">Output</div>
             <div class="arch-block-body">
               Binary plume mask &nbsp;+&nbsp; severity label &nbsp;+&nbsp; JSON alert packet<br>
-              <span style="color:#4f4f4f">616,388 trainable params &nbsp;·&nbsp; 85 MB checkpoint</span>
+              <span style="color:#4f4f4f">{MODEL_METADATA['trainable_parameters']:,} trainable params &nbsp;·&nbsp; {MODEL_METADATA['checkpoint_bytes']/(1024**2):.1f} MiB checkpoint</span>
             </div>
           </div>
 
@@ -421,19 +498,19 @@ with tab_model:
     with col_cfg:
         st.markdown('<p class="section-label">Historical Notebook Configuration</p>', unsafe_allow_html=True)
         st.caption("Checkpoint-to-training-run association remains unknown. These settings describe the notebook, not a newly reproduced run.")
-        st.markdown("""
+        st.markdown(f"""
         <div class="cfg-grid">
           <div class="cfg-item">
             <div class="cfg-key">Optimizer</div>
-            <div class="cfg-val">AdamW</div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['optimizer']}</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Learning rate</div>
-            <div class="cfg-val">1 × 10<sup style="font-size:0.65rem">-3</sup></div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['learning_rate']}</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Weight decay</div>
-            <div class="cfg-val">1 × 10<sup style="font-size:0.65rem">-4</sup></div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['weight_decay']}</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Scheduler</div>
@@ -441,19 +518,19 @@ with tab_model:
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Patience</div>
-            <div class="cfg-val">3 epochs</div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['scheduler_patience']} epochs</div>
           </div>
           <div class="cfg-item">
-            <div class="cfg-key">Epochs trained</div>
-            <div class="cfg-val">20</div>
+            <div class="cfg-key">Joint epochs in notebook</div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['joint_epochs']}</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Batch size</div>
-            <div class="cfg-val">2</div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['batch_size']}</div>
           </div>
           <div class="cfg-item">
             <div class="cfg-key">Seg loss weight</div>
-            <div class="cfg-val">0.7</div>
+            <div class="cfg-val">{MODEL_METADATA['historical_notebook']['segmentation_weight']}</div>
           </div>
           <div class="cfg-item" style="grid-column:span 2">
             <div class="cfg-key">Seg loss</div>

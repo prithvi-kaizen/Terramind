@@ -17,3 +17,6 @@ requests==2.34.2
 Pillow==12.3.0
 scipy==1.18.1
 scikit-learn==1.9.1
+
+# Explicit CRS/geodesic calculations for candidate areas.
+pyproj==3.8.0

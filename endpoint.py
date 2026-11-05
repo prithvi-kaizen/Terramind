@@ -13,6 +13,7 @@ import math
 BASE_DIR = Path(__file__).parent
 sys.path.insert(0, str(BASE_DIR))
 from methanepulse.runtime import run_inference
+from methanepulse.candidates import CandidateConfig
 from rasterio.errors import RasterioIOError
 
 app = Flask(__name__)
@@ -48,6 +49,11 @@ def predict():
     except (TypeError, ValueError):
         return jsonify({"error": "threshold must be a finite number between 0 and 1 (exclusive)"}), 400
 
+    try:
+        candidate_config = CandidateConfig(min_area_m2=float(request.form.get('min_area_m2',1600)),
+            filter_flags=tuple(flag.strip() for flag in request.form.get('filter_flags','').split(',') if flag.strip()))
+    except (TypeError, ValueError) as exc:
+        return jsonify({'error':str(exc)}), 400
     if not CKPT.exists():
         return jsonify({"error": f"Checkpoint not found: {CKPT}"}), 500
 
@@ -63,6 +69,7 @@ def predict():
             checkpoint_path       = str(CKPT),
             output_dir            = str(RESULTS),
             confidence_threshold  = threshold,
+            candidate_config      = candidate_config,
         )
 
         return jsonify(alert), 200

@@ -16,6 +16,7 @@ def main():
     for package, module in [
         ("torch", "torch"), ("numpy", "numpy"), ("pandas", "pandas"),
         ("rasterio", "rasterio"), ("matplotlib", "matplotlib"),
+        ("scipy", "scipy"), ("pyproj", "pyproj"),
         ("terratorch", "terratorch"), ("torchgeo", "torchgeo"),
         ("streamlit", "streamlit"), ("Flask", "flask"),
     ]:

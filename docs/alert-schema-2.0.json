@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/prithvi-kaizen/Terramind/main/docs/alert-schema-2.0.json",
+  "title": "MethanePulse alert schema 2.0",
+  "type": "object",
+  "required": [
+    "alert_id",
+    "schema_version",
+    "source",
+    "detection",
+    "severity",
+    "model",
+    "artifacts",
+    "candidates",
+    "candidate_count",
+    "postprocessing",
+    "filtered",
+    "quality"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "alert_id": {
+      "type": "string"
+    },
+    "candidate_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "crs"
+      ],
+      "properties": {
+        "crs": {
+          "type": "string"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "required": [
+        "mask_path",
+        "probability_path",
+        "filtered_mask_path",
+        "candidate_labels_path",
+        "geojson_path",
+        "alert_path"
+      ],
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
+    },
+    "postprocessing": {
+      "type": "object",
+      "required": [
+        "version",
+        "connectivity",
+        "filter_flags",
+        "config_sha256"
+      ],
+      "properties": {
+        "version": {
+          "const": "candidates-v1"
+        },
+        "connectivity": {
+          "const": 4
+        },
+        "filter_flags": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "small_area",
+              "edge_contact",
+              "threshold_sensitive"
+            ]
+          }
+        },
+        "config_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "filtered": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "plume_pixel_count",
+        "removed_pixel_count"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "plume_pixel_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "removed_pixel_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "position": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "ring": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "$ref": "#/$defs/position"
+      }
+    },
+    "polygon": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ring"
+      }
+    },
+    "geometry": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "coordinates"
+          ],
+          "properties": {
+            "type": {
+              "const": "Polygon"
+            },
+            "coordinates": {
+              "$ref": "#/$defs/polygon"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "coordinates"
+          ],
+          "properties": {
+            "type": {
+              "const": "MultiPolygon"
+            },
+            "coordinates": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/polygon"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "id",
+        "label_id",
+        "pixel_count",
+        "area_m2",
+        "source_crs",
+        "bbox_pixels",
+        "bbox_source",
+        "centroid_source",
+        "centroid_wgs84",
+        "probability",
+        "quality_flags",
+        "evidence_state",
+        "geometry_wgs84",
+        "removed_by_experimental_filter"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^candidate-[0-9]+$"
+        },
+        "pixel_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "label_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "area_m2": {
+          "type": "number",
+          "minimum": 0
+        },
+        "source_crs": {
+          "type": "string"
+        },
+        "evidence_state": {
+          "enum": [
+            "candidate",
+            "needs_review"
+          ]
+        },
+        "centroid_wgs84": {
+          "$ref": "#/$defs/position"
+        },
+        "geometry_wgs84": {
+          "$ref": "#/$defs/geometry"
+        },
+        "quality_flags": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "small_area",
+              "edge_contact",
+              "threshold_sensitive",
+              "invalid_pixel_overlap"
+            ]
+          }
+        },
+        "probability": {
+          "type": "object",
+          "required": [
+            "mean",
+            "min",
+            "max",
+            "calibrated"
+          ],
+          "properties": {
+            "mean": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "min": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "max": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "calibrated": {
+              "const": false
+            }
+          }
+        },
+        "removed_by_experimental_filter": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
