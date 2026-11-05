@@ -165,7 +165,7 @@ The [Phase 1 guide](docs/PHASE_1.md) covers model reuse, CPU benchmarking, evalu
 
 Phase 2 separates four-connected foreground regions into candidates with geodesic area, geometry, probability summaries and review flags. It uses the same model pass. Raw predictions remain unchanged; all heuristic removal rules are off by default. In Streamlit, inspect **Plume candidates** and expand **Download prediction artifacts** for mask/probability GeoTIFFs, GeoJSON and JSON. An advanced setting enables explicit experimental filtering.
 
-The validation pilot did not justify promoting any removal rule: reduced false alarms came with excessive recall loss. See the [Phase 2 guide and migration notes](docs/PHASE_2.md), [validation report](docs/phase-2-validation.json), and [CPU benchmark](docs/phase-2-benchmark.json). Phase 2 improves inspection and export; it does not solve poor real-scene model transfer.
+The validation pilot did not justify promoting any removal rule: reduced false alarms came with excessive recall loss. See the [Phase 2 completion report and deployment evidence](docs/phase-2-report.md), [guide and migration notes](docs/PHASE_2.md), [validation report](docs/phase-2-validation.json), and [CPU benchmark](docs/phase-2-benchmark.json). Phase 2 improves inspection and export; it does not solve poor real-scene model transfer.
 
 ## Next steps
 

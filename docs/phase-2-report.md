@@ -18,7 +18,7 @@ Real offline CPU smoke passes with the included checkpoint. The saved sample ret
 
 Streamlit AppTest verified real candidate inspection, all five downloads, explicit filtering, raw preservation, one model load, and no additional forward pass while changing inspection/display controls. Isolated, clearly synthetic fixtures verified empty/error states. The actual browser produced a downloadable GeoJSON FeatureCollection with four Polygon features, checkpoint provenance and no default filter rules. A synthetic three-band, 16×16 upload displayed the supported-input error and disabled Run Inference.
 
-At 390×844, document width and scroll width were both 390 pixels; all five download buttons were 44 pixels high and fitted their column. At width 900, document and scroll widths were both 900. The temporary viewport override was reset. The existing focus accent has measured contrast 5.72:1 on the background. Keyboard and hosted checks are recorded below when complete; this is not a claim of a full independent accessibility audit.
+At 390×844, document width and scroll width were both 390 pixels; all five download buttons were 44 pixels high and fitted their column. At width 900, document and scroll widths were both 900. The temporary viewport override was reset. The existing focus accent has measured contrast 5.72:1 on the background. Tab navigation between download buttons was verified in the browser, with a solid two-pixel focus ring. This is not a claim of a full independent accessibility audit.
 
 ## Computation
 
@@ -50,7 +50,13 @@ The small-area rule reduced clean-reference detections from 32/32 to 31/32 but l
 | Warm p95 at most 20% above fresh Phase 1 | Passed on the recorded single-sample workload |
 | Individual/combined rule evaluation | Completed; no filter promoted |
 | Real downloads, invalid-upload feedback, narrow/tablet layout | Verified locally in browser |
-| Linux full environment, adapter/schema/UI smoke | Pending remote CI evidence |
-| Hosted Phase 2 prediction, candidates and downloads | Pending publication verification |
+| Linux full environment, adapter/schema/UI smoke | Passed both jobs in Actions run 42024939718 |
+| Hosted Phase 2 prediction, candidates and downloads | Passed on the public Streamlit deployment |
 
 See [PHASE_2.md](PHASE_2.md) for reproduction commands and schema migration. Raw data and local output rasters stay outside Git; the reports preserve measurement evidence. Existing model licensing and training-run traceability limitations remain unchanged.
+
+Both Linux jobs passed in [Actions run 42024939718](https://github.com/prithvi-kaizen/Terramind/actions/runs/42024939718), implementation head `f6c7bb6`. [PR 2](https://github.com/prithvi-kaizen/Terramind/pull/2) was merged as `3a78f6b`. This includes complete CPU dependency installation, schema validation, raw mask regression, exact API/cloud adapter agreement, and the real/fixture UI workflow.
+
+The [public deployment](https://terramind-demo.streamlit.app/) was verified after merging: sample inference retained 1,244 foreground pixels, displayed four candidates, exposed individual candidate metadata and the five artifact downloads. A GeoJSON download from the hosted app was parsed successfully as a FeatureCollection containing four features. Phase 2 is complete; Phase 3 remains planned.
+
+![Hosted Phase 2 candidate table and artifact downloads](images/phase-2-live.png)
