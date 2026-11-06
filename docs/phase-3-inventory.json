@@ -1,0 +1,43 @@
+{
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "processor": "arm",
+  "disk_free_bytes": 10895360000,
+  "local_data": {
+    "data/raw/phase2-validation": {
+      "files": 98,
+      "bytes": 30504431,
+      "suffix_counts": {
+        ".parquet": 2,
+        ".tiff": 96
+      }
+    },
+    "data/raw/real-fixed": {
+      "files": 194,
+      "bytes": 50995702,
+      "suffix_counts": {
+        ".parquet": 2,
+        ".tiff": 192
+      }
+    },
+    "data/raw/methaneset": {
+      "files": 12,
+      "bytes": 17123380,
+      "suffix_counts": {
+        ".parquet": 2,
+        ".tacozip": 1,
+        ".tiff": 9
+      }
+    },
+    "data/raw/geoch4": {
+      "files": 2,
+      "bytes": 5144576,
+      "suffix_counts": {
+        ".bin": 1,
+        ".tar": 1
+      }
+    }
+  },
+  "reviewed_phase3_training_manifest": null,
+  "reviewed_co_registered_dates": null,
+  "decision": "implement tooling; defer scientific training and temporal experiments"
+}

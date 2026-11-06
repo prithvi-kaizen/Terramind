@@ -1,6 +1,6 @@
 # Terramind implementation plan: three phases
 
-Status: updated 5 November 2026. Phase 1 software is implemented; the complete synthetic audit and limited real-scene stress test have completed. Deployment-matched independent validation remains open. Phase 2 software is implemented, with all heuristic filters informational by default after validation. Phase 3 remains proposed work. See [the Phase 2 guide](PHASE_2.md). See [the Phase 1 report](phase-1-report.md).
+Status: Phase 1 software is implemented; the complete synthetic audit and limited real-scene stress test have completed. Deployment-matched independent validation remains open. Phase 2 software is implemented, with all heuristic filters informational by default after validation. Phase 3 tooling is implemented for review; targeted research training, new accepted weights and real temporal validation remain deferred pending reviewed data. See [the Phase 3 report](phase-3-report.md), [Phase 2 guide](PHASE_2.md), and [Phase 1 report](phase-1-report.md).
 
 ## Objective and starting point
 
